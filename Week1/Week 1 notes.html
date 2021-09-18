@@ -1,0 +1,64 @@
+<!--Local Storage reading notes
+input= what's given to computer output= info given to user
+The program below uses the 3 button functions to save the story to localStorage 
+and reload it when requested.  Other important things to note include that sections take 
+whole width of the document, and to refer to the display you use .innerHTML not .value-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Story Editor</title>
+    <script>
+        function loadStory(){
+            var storyName = document.getElementById("name_input").value 
+            var storyHTML = localStorage.getItem(storyName)
+            document.getElementById("story_editor").value = storyHTML 
+
+        }
+        function saveStory(){
+            var storyName= document.getElementById("name_input").value
+            var storyHTML = document.getElementById("story_editor").value
+            localStorage.setItem(storyName,storyHTML)
+
+        }
+        function displayStory(){
+            var storyHTML= document.getElementById("story_editor").value
+            document.getElementById("story_display").innerHTML=storyHTML
+
+        }
+    </script>
+    <style>
+        textarea{
+            width: 800px;
+            height: 250px;
+            background-color: lightyellow;
+        }
+    </style>
+  </head>
+  <body>
+      <h1>Story Editor</h1>
+      Story Name: <input id=name_input></input>
+      <section>
+          <button onclick="loadStory()">Find and Edit It</button>
+          <button onclick="saveStory()">Save It</button>
+          <button onclick="displayStory()">Display It</button>
+      </section>
+      <textarea id= "story_editor" placeholder="Write a totally awesome story here."></textarea>     
+      <section id= "story_display"></section>  
+    </body>
+</html>
+
+<!--Master Moble UX Notes
+Always focuse on mobile first design.  Everything should be designed to view on phone screen and then 
+can be made big screen friendly after.  Mobile first is not the same as responsive design. Start small 
+and scale up. Be there-help the user through the journey.  Be Useful- users leave if you don't satisfy their needs.
+Be Quick- faster access is best.  short attention spans. Most people use a phone with a one handed grip to operate the device.
+Things should be easy to reach based on how people hold devices. Also don't assume everyone has latest and greatest.  Reduce image use
+SVG/Webfonts, optimize the code, gzip files to reduce data required.  Move primary controls to bottom whenever possible.  
+Most used buttons need to be on bottom.  Hamburger menu isn't universally clear...needs to be labled menu. Users
+will switch to different system instead of complaining.  Forms are hard for mobiles.  Ditch labels and use floating labels or placeholders instead.  
+Only ask for information that are absolutely needed.  Use progress indicators if your break it up into lots of pages.
+Enable autofil. Mobiles need feature to show/hide password. Auto format numbers. Auto advance to next field. Make sure
+numbers only boxes bring up the keypad and not the keyboard.  Use anchor tag for phone numbers so they don't need to copy and paste.
+Pay attention to how people respond to ads.  Make sure ads are sized for mobile and not desktop.  Everyone hates pop-ups or inbetweener ads. 
+Make ads small and simple.  Don't use pop-ups and pop-overs.  Keep it as unobstrusive as possible.  -->

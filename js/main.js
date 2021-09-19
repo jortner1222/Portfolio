@@ -7,7 +7,7 @@ const links =[
    
     {
         label: "Week 1 Notes",
-        url: "../Portfolio/Week1/Week 1 notes.html" 
+        url: "Week1/Week 1 notes.html" 
     }
 ]
 let list = document.getElementById("TableOfContents")

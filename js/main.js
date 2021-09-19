@@ -1,3 +1,4 @@
+let list = document.getElementById("TableOfContents")
 const links =[
     {
         label: "Index",
@@ -9,3 +10,12 @@ const links =[
         url: "../Week1/Week 1 notes.html" 
     }
 ]
+
+links.forEach((item)=> {
+let li = document.createElement("li")
+let a =document.createElement("a")
+a.textContent= item.label
+a.setAttribute('href', item.url)
+li.appendChild(a);
+list.appendChild(li)
+})

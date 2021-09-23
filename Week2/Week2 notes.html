@@ -1,0 +1,74 @@
+<!-- Comments in JavaScript are done with // for single line and /* for long comments
+semicolons are optional but using them is best practice
+data types are string, symbol, number, boolean, undefined, and null.
+
+typeof __ will return what type
+
+Declare variables with const or let.  var is considered outdated.  
+const = constant...can't be reassigned.  let can be reassigned.  Both have
+limited scope to the block they are in.  var was global.  use camel-case. 
+ex: let x = 3, y = 4, z = 5;
+
+Strings: Either "" or '' work. Can't use ' inside string unless you used " " to wrap. 
+Or you can escape character it like " It\'s me"
+
+To access a property of a variable can use .  ex:  name.length
+
+To call a method use variable.method()  ex: name.toUpperCase(); or name.toLowerCase(); 
+
+Common methods not mentioned already:  indexOf("x"), charAT("x"), lastIndexOf("x"),
+includes("x"), startsWith("x"), endsWith("x"), variable.concat("string") or "string" + "string",
+.trim() removes whitespace before and after, 
+
+template literals are `` and used like "" around a string.  They allow quotes marks within string,
+and you can put code in string like `String ${javascript} more string`  Line breaks are converted into
+\n automatically.  
+
+symbols are new...used to make unique values like ids. Need a description with them. 
+Description gets logged to console when symbol is used.  String(uniqueID) will return description. 
+ex: const uniqueID= Symbol("This is a unique ID")
+
+Numbers refer to ints or floats interchangably. If it starts with 0x it's in hexadecimal notation (base 16).  0o is for base 8. 
+0b is base 2.  Exponential notation or scientific notion is done with an e...aka 2e3 means 2 X 10^3
+
+to use a method with an interger add a space before use two .. or write as a decimal.  Can also declare as const  
+ex:  5 .toExpontential(); 5..toExpontential(); or 5.0.toExpontential(); 
+
+common number methods:  .toFixed(x) rounds to that many decimal places.  returns a string not a number;
+
+toPrecision(x) is simlar...but often exponential notation
+
+numbers use +_*/% and ** is ^.  Can also use +=, ++, -- etc.  points++ returns points then adds,
+++points adds then displays.  
+
++-infinity is an error for too big to display.  NaN means not a number. 
+
+can check if number can be used with number.isFinite();. 
+
+javascript will try to convert strings to numbers when used, but it's not consistent. 
+
+number("string") converts to number.  String(x) converts number to string. also can use .toString() parseInt(number,base) converts out of different bases. This also will pull numbers
+out of a string that starts with numbers like an address.  parseFloat() is similar. 
+
+Empty strings and 0 will evulate to fake false, everything else tends to be fake true
+!= Not
+&& = and
+||= or
+== is equals. doesn't tell between string numbers and numbers. 
+also has bitwise operators.  
+=== also equals but needs matching data type. doesn't work with NaN needs to be isNaN(x).
+also has >,<,<=.>=  Quiz Ninja Example below
+-->
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Quiz Ninja</h1>
+<script>
+  const question = "What is Superman's real name?"
+  const answer = prompt(question);
+  alert("You answered " + answer);  
+</script>
+
+</body>
+</html>

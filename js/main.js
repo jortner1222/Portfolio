@@ -8,6 +8,10 @@ const links =[
     {
         label: "Week 1 Notes",
         url: "../Portfolio/Week1/Week 1 notes.html" 
+    },
+    {
+        label: "Week 2 Notes",
+        url: "../Portfolio/Week2/Week 2 notes.html"
     }
 ]
 let list = document.getElementById("TableOfContents")

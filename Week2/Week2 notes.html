@@ -69,40 +69,116 @@ also has >,<,<=.>=  Quiz Ninja Example below
         ["What is Wonder Woman's real name?", "Diana Prince"],
         ["What is Batman's real name?", "Bruce Wayne"],
       ]);
-      
-      function start(quiz){
-      let score = 0;
-      for (const [question, answer] of quiz.entries()) {
-        const response = ask(question);
-        check(response, answer)
-      }
-    
-      gameOver(); 
-    function ask(question){
-        return prompt(question)
-    }
-    function check(response, answer){
-        if (response === answer) {
-          alert("Correct!");
-          score++;
-        } else {
-          alert("Wrong.");
+
+      function start(quiz) {
+        let score = 0;
+        for (const [question, answer] of quiz.entries()) {
+          const response = ask(question);
+          check(response, answer);
         }
-    }
-    function gameOver(){
-      alert("Game Over, you scored " + score);
-    }
-      //const question = "What is Superman's real name?";
-      //const answer = prompt(question);
-      //alert("You answered " + answer);
+
+        gameOver();
+        function ask(question) {
+          return prompt(question);
+        }
+        function check(response, answer) {
+          if (response === answer) {
+            alert("Correct!");
+            score++;
+          } else {
+            alert("Wrong.");
+          }
+        }
+        function gameOver() {
+          alert("Game Over, you scored " + score);
+        }
+        //const question = "What is Superman's real name?";
+        //const answer = prompt(question);
+        //alert("You answered " + answer);
       }
       start(quiz);
-      
+    </script>
+    <h1>Looping a Triangle</h1>
+    <p id="body"></p>
+    <script>
+      let string = "#";
+      for (let x = 0; x < 7; x++) {
+        let newElement = document.createElement("p");
+        newElement.textContent = string;
+        document.getElementById("body").appendChild(newElement);
+        string += "#";
+      }
+    </script>
+    <h1>FizzBuzz</h1>
+    <p id="numberList"></p>
+    <script>
+      for (let i = 1; i <= 100; i++) {
+        if (i % 3 == 0) {
+          let newElement = document.createElement("p");
+          newElement.textContent = "Fizz";
+          document.getElementById("numberList").appendChild(newElement);
+        } else if (i % 5 == 0) {
+          let newElement = document.createElement("p");
+          newElement.textContent = "Buzz";
+          document.getElementById("numberList").appendChild(newElement);
+        } else {
+          let newElement = document.createElement("p");
+          newElement.textContent = i;
+          document.getElementById("numberList").appendChild(newElement);
+        }
+      }
+    </script>
+
+    <h1>Minimum</h1>
+    see console
+    <script>
+      function min(x, y) {
+        if (x < y) {
+          return x;
+        } else {
+          return y;
+        }
+      }
+      console.log(min(0, 10));
+      // → 0
+      console.log(min(0, -10));
+      // → -10
+    </script>
+    <h1>Sum of a Range</h1>
+    see console
+    <script>
+      function range(x, y, z = 1) {
+        let array = [];
+        if (x <= y) {
+          for (i = x; i <= y; i += z) {
+            array.push(i);
+          }
+        } else {
+          for (i = x; i >= y; i += z) {
+            array.push(i);
+          }
+        }
+        return array;
+      }
+      function sum(array) {
+        let sum = 0;
+        for (i = 0; i<array.length; i++) {
+          sum += array[i];
+        }
+        return sum;
+      }
+
+      console.log(range(1, 10));
+      // → [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      console.log(range(5, 2, -1));
+      // → [5, 4, 3, 2]
+      console.log(sum(range(1, 10)));
+      // → 55
     </script>
   </body>
 </html>
 
-<!--Array, Logic, and Loops notes
+<!-- Array, Logic, and Loops notes
 ex: const myArray=[]; 
 to fill:  heros[0]= "Superman" or const avengers= ["captain America", "Iron Man", "thor", "hulk"];
 Can be mixed types.  

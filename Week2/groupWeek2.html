@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Week 2 Team Activity</title>
+
+
+</head>
+
+<body>
+<input id="inputOne" type="number"></input>
+<button id="buttonOne" onclick="subtract()">-</button>
+<div id="reqOneOutput">
+
+</div>
+
+<input id="inputTwo" type="number"></input>
+<button id="buttonTwo" onclick="add()">+</button>
+<div id="reqTwoOutput"></div>
+
+<button id="buttonOne" onclick="product()">*</button>
+
+
+
+<footer></footer>
+
+<script>
+
+
+function reqOne() {
+let input = document.getElementById("inputOne").value;
+document.getElementById("reqOneOutput").innerHTML = input;
+}
+
+function reqTwo(){
+let input = document.getElementById("inputOne").value;
+let sum = 0
+
+for (let i=1; i<=input; i++){
+sum+=i;
+}
+document.getElementById("reqOneOutput").innerHTML = sum;
+}
+
+function add(){
+let numberOne = parseInt(document.getElementById("inputOne").value);
+let numberTwo = parseInt(document.getElementById("inputTwo").value);
+let sum = numberOne + numberTwo;
+
+document.getElementById("reqTwoOutput").innerHTML = sum;
+
+}
+
+subtract=()=>{
+let numberOne = parseInt(document.getElementById("inputOne").value);
+let numberTwo = parseInt(document.getElementById("inputTwo").value);
+let sum = numberOne - numberTwo;
+
+document.getElementById("reqTwoOutput").innerHTML = sum;
+
+}
+
+const product = function mult() {
+let numberOne = parseInt(document.getElementById("inputOne").value);
+let numberTwo = parseInt(document.getElementById("inputTwo").value);
+let sum = numberOne * numberTwo;
+
+document.getElementById("reqTwoOutput").innerHTML = sum;
+}
+
+</script>
+</body>
+</html>

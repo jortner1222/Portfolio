@@ -61,14 +61,144 @@ also has >,<,<=.>=  Quiz Ninja Example below
 -->
 <!DOCTYPE html>
 <html>
-<body>
-
-<h1>Quiz Ninja</h1>
-<script>
-  const question = "What is Superman's real name?"
-  const answer = prompt(question);
-  alert("You answered " + answer);  
-</script>
-
-</body>
+  <body>
+    <h1>Quiz Ninja</h1>
+    <script>
+      const quiz = new Map( [
+        ["What is Superman's real name?", "Clark Kent"],
+        ["What is Wonder Woman's real name?", "Diana Prince"],
+        ["What is Batman's real name?", "Bruce Wayne"],
+      ]);
+      let score = 0;
+      for (const [question, answer] of quiz.entries()) {
+        const response = prompt(question);
+        if (response === answer) {
+          alert("correct");
+          score ++;
+        } else {
+          alert("Wrong.");
+        }
+      }
+      alert("Game Over, you scored " + score);
+      //const question = "What is Superman's real name?";
+      //const answer = prompt(question);
+      //alert("You answered " + answer);
+    </script>
+  </body>
 </html>
+
+<!--Array, Logic, and Loops notes
+ex: const myArray=[]; 
+to fill:  heros[0]= "Superman" or const avengers= ["captain America", "Iron Man", "thor", "hulk"];
+Can be mixed types.  
+delete avengers[3]; //deletes and replaces with undefined
+
+destructuring array= takes values out of array and assigns them.  aka:
+const [x,y]=[1,2]; 
+Properties:  
+.length
+methods:
+.pop() // takes off and returns last item. 
+.shift() //takes off and returns first item. 
+.push() // adds to end
+.unshift()//adds to beggining. 
+.concat() merges array with a different one. 
+.join.() turns into string with commas. can put string in with different separator. 
+.slice(x,y)takes a subarray starting with first and ending with last.  Doesn't change originally array.
+.splice(x,y, string) removes y(can be 0) many items starting at x and replaces with string(can be ommited)
+.reverse() reverses it
+.sort() alphabetizes it.  needs a function passed as an argument to work right with numbers
+.indexOf(string) returns index of string.  if not there returns -1
+.includes(string)
+
+multidemensional arrays
+declared like:
+const coordinates=[[1,3],[4,2]]
+to refer to a spot needs two indexes first refers to outer array place, second inner place
+so coordinates[0][0] would refer to 1
+and coordinates [1][1] would be 2
+can be flattened using spread:  ex:
+const summer = ['Jun', 'Jul', 'Aug'];
+const winter = ['Dec', 'Jan', 'Feb'];
+const nested = [ summer, winter ];
+<< [ [ 'Jun', 'Jul', 'Aug' ], [ 'Dec', 'Jan', 'Feb' ] ]
+const flat = [...summer, ...winter];
+<< [ 'Jun', 'Jul', 'Aug', 'Dec', 'Jan', 'Feb' ]
+
+sets are like arrays or list with no duplicate values allowed. strings get added as letters with deleted duplicate letters. 
+Can have arrays or objects with same values as others. type sensitive aka 2 and "2" can both be added.  
+no idexes. 
+declared ex:
+const list= new Set(); or
+const numbers=new Set([1,2,3])
+
+methods: 
+.add(x)
+.size()
+.has() returns boolean
+.delete(x) removes value...returns true if done, false if not. 
+.clear() removes all.
+
+can covert to array by using spread variable.  
+ex: 
+const shoppingArray = [...shoppingSet]
+shoppingArray
+<< [ 'Apples', 'Bananas', 'Beans' ]
+
+Maps- stores value with an index tied to it. 
+ex: const heroes = new Map([ ['Clark Kent','Superman'],
+['Bruce Wayne', 'Batman']
+]);
+or 
+const romanNumerals = new Map();
+romanNumerals.set(1,'I');
+<< Map { 1 => 'I' }
+
+Logic
+If:  
+if (condition){
+
+}
+if else:
+if(condition){
+
+}else { 
+
+}
+ternary operator-a shorthand for if/else.  ex:
+condition ? (runs if true):(runs if false)
+switch statements--like giant if else else else block.
+switch (number){
+    case 3:
+        console.log("its three")
+        break; 
+    case 2:
+        break; 
+     default:    
+}
+Loops: 
+While- 
+while(condition){
+
+}
+do..while
+do{
+
+}while(condition)
+
+for:
+
+for (let x=0; x<10, x++){
+
+}
+
+loop through a set:  
+const letters = new Set('hello');
+for(const letter of letters) {
+    console.log(letter);
+}
+<< h
+e
+l
+o
+-->

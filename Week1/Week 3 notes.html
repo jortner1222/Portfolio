@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <body>
+      <h1>Calculator</h1>
+      <textarea id="number1"></textarea>
+      <textarea id="number2"></textarea>
+      <button type="button" onclick="read();">read</button>
+      <button type="button" onclick="sum();">sum</button>
+      <button type="button" onclick="multiply();">multiply</button>
+    </body>
+    <script>
+      function read() {
+        this.num1 = document.getElementById("number1").value;
+        this.num2 = document.getElementById("number2").value;
+      }
+      function sum() {
+        let sum = parseInt(this.num1) + parseInt(this.num2);
+        console.log("The sum is " + sum);
+      }
+      function multiply() {
+        let product = this.num1 * this.num2;
+        console.log("The product is " + product);
+      }
+    </script>
+    <h1>Quiz Ninja</h1>
+    <script>
+        const quiz =[
+            {name: "Superman", realName: "Clark Kent"},
+            {name: "Wonder Woman", realName: "Diana Prince"},
+            {name: "Batman", realName: "Bruce Wayne"},
+        ];
+   
+      const game={
+          start(quiz){
+              this.questions=[...quiz]; // what is ...?
+              this.score=0;
+              for(const question of this.questions){
+                  this.question=question;
+                  this.ask();
+              }
+              this.gameOver();
+              },
+            ask(){
+                const question= `What is ${this.question.name}'s real name?`;
+                const response= prompt(question);
+                this.check(response);
+              },
+            check(response){
+                const answer= this.question.realName;
+                if(response===answer){
+                    alert("Correct!");
+                    this.score++;
+                }else {
+                    alert( `Wrong! The correct answer was ${answer}`)
+                }               
+            },
+            gameOver(){
+                alert(`Game Over, you scored ${this.score} point${this.score !==1? 's' : ' '}.`);
+            }
+    }
+              game.start(quiz); 
+          
+
+      
+    </script>
+  </head>
+</html>
+
+<!-- 
+
+    Method Example:  
+    user.sayHi=function(){
+        alert("Hello");
+    };
+    user.sayHi(); 
+
+    or
+
+    function sayHi(){
+
+    }
+    user.sayHi=sayHi; 
+
+    or
+
+    user={
+        say(){
+
+        }
+    }; --Does it need this semicolon?  
+    this==current object.  
+    ex:  
+    function sayHi(){
+        alert(this.name);
+    }
+    user.f= SayHi;
+    admin.f= SayHi; ---Whats with the f? 
+    The rule is simple: if obj.f() is called, then this is 
+    obj during the call of f. So it’s either user or admin in the example above.
+
+   this will give an error needs to be run as this.function not "this".function
+   :  function makeUser(){
+                return {
+                    name: "John",
+                    ref: this                }
+            }; 
+            let user = makeUser();
+            alert(user.ref.name); 
+    object literal ex: 
+    const superman = {
+    name: 'Superman',
+    'real name': 'Clark Kent',
+    height: 75,
+    weight: 235,
+    hero: true,
+    villain: false,
+    allies: ['Batman','Supergirl','Superboy'],
+    fly() {
+        return 'Up, up and away!';
+    }
+};
+
+this logs all of superman's properties to the console: 
+for(const key in superman) {
+    console.log(key + ": " + superman[key]);
+}
+<< "name: Superman"
+<< "real name: Clark Kent"
+<< "height: 75"
+<< "weight: 235"
+<< "hero: true"
+<< "villain: false"
+<< "allies: Batman,Supergirl,Superboy"
+<< "fly: function (){
+    console.log(\"Up, up and away!\");
+}"
+ Object.keys() method will return an array of all the keys of any object 
+You can enter parameters in any order to a function.  
+ex: function greet({greeting,name,age}) 
+    return `${greeting}! My name is ${name} and I am ${age} years old.`;
+}
+greet({ greeting: `What's up dude`, age: 10, name: `Bart` });
+ 'What\'s up dude! My name is Bart and I am 10 years old.'
+Math.abs() returns absolute value
+Math.ceil() rounds decimal up to nearest int
+Math.floor() rounds decimal down to nearest int
+Math.round() rounds to nearest
+Math.trunc() just leaves off decimals.
+Math.pow(number,power) raises the number to the power.
+Math.sqrt() returns positive square root
+Math.max() returns bigggest number from argument
+Math.min() returns smallest
+Math.random()returns fandom number between 0-1 (not including 1).
+  to get between 0-6 * by 6. 
+  Math.floor(6 * Math.random()); generates whole number between 0 and 5. 
+
+  Date defaults to today's date and time unless told otherwise. 
+  getDay() returns number between 0-6 meaning sunday-sat. 
+  getMonth() starts at 0 and goes to 11
+  getDate() starts at 1 and goes to 31
+  getFullYear() don't use getYear().  
+
+  all these also have a set version. 
+
+  Regular Expressions - search terms used to see if string matches.  
+  ex: words ending in ing const pattern= /[a-zA-z]+ing$/
+  or
+  const patter = new RegExp("[a-zA-Z+ing");
+  pattern.test("word") checks if it matches the pattern
+  pattern.exec("word") returns array containing the first match. 
+  ^ before means not.  so [^A-Z] means not captials.
+   . matches any character, except line breaks
+
+ \w matches any word character, and is equivalent to [A-Za-z0-9_]
+
+ \W matches any non-word character, and is equivalent to [\^A-Za-z0-9_]
+
+ \d matches any digit character, and is equivalent to [0-9]
+
+ \D matches any non-digit character, and is equivalent to [^0-9]
+
+ \s matches any whitespace character, and is equivale
+ nt to [ \t\r\n\f]
+
+ \S matches any non-whitespace character, and is equivalent to [^ \t\r\n\f]
+ 
+ 
+ -->

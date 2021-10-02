@@ -5,15 +5,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
-    <body>
-      <h1>Calculator</h1>
-      <textarea id="number1"></textarea>
-      <textarea id="number2"></textarea>
-      <button type="button" onclick="read();">read</button>
-      <button type="button" onclick="sum();">sum</button>
-      <button type="button" onclick="multiply();">multiply</button>
-    </body>
+    <meta charset="utf-8" />
+    <meta name="description" content="A JavaScript Quiz Game" />
+    <title>Justice League</title>
+  </head>
+  <title></title>
+  <body>
+    <h1>Calculator</h1>
+    <textarea id="number1"></textarea>
+    <textarea id="number2"></textarea>
+    <button type="button" onclick="read();">read</button>
+    <button type="button" onclick="sum();">sum</button>
+    <button type="button" onclick="multiply();">multiply</button>
+
     <script>
       function read() {
         this.num1 = document.getElementById("number1").value;
@@ -28,48 +32,111 @@
         console.log("The product is " + product);
       }
     </script>
-    <h1>Quiz Ninja</h1>
-    <script>
-        const quiz =[
-            {name: "Superman", realName: "Clark Kent"},
-            {name: "Wonder Woman", realName: "Diana Prince"},
-            {name: "Batman", realName: "Bruce Wayne"},
-        ];
-   
-      const game={
-          start(quiz){
-              this.questions=[...quiz]; // what is ...?
-              this.score=0;
-              for(const question of this.questions){
-                  this.question=question;
-                  this.ask();
-              }
-              this.gameOver();
-              },
-            ask(){
-                const question= `What is ${this.question.name}'s real name?`;
-                const response= prompt(question);
-                this.check(response);
-              },
-            check(response){
-                const answer= this.question.realName;
-                if(response===answer){
-                    alert("Correct!");
-                    this.score++;
-                }else {
-                    alert( `Wrong! The correct answer was ${answer}`)
-                }               
-            },
-            gameOver(){
-                alert(`Game Over, you scored ${this.score} point${this.score !==1? 's' : ' '}.`);
-            }
-    }
-              game.start(quiz); 
-          
 
+    <h1>Quiz Ninja</h1>
+    <section class="dojo">
+      <div class="quiz-body">
+        <header>
+          <div id="score">Score: <strong>0</strong></div>
+          <h1>Quiz Ninja!</h1>
+        </header>
+        <div id="question"></div>
+        <div id="result"></div>
+        <div id="info"></div>
+        <button id="start">Click to Start</button>
+      </div>
+    </section>
+    <script>
+      const quiz = [
+        { name: "Superman", realName: "Clark Kent" },
+        { name: "Wonder Woman", realName: "Diana Prince" },
+        { name: "Batman", realName: "Bruce Wayne" },
+      ];
+      const view = {
+        start: document.getElementById("start"),
+        score: document.querySelector("#score strong"),
+        question: document.getElementById("question"),
+        result: document.getElementById("result"),
+        info: document.getElementById("info"),
+        render(target, content, attributes) {
+          for (const key in attributes) {
+            target.setAttribute(key, attributes[key]);
+          }
+          target.innerHTML = content;
+        },
+        show(element) {
+          element.style.display = "block";
+        },
+        hide(element) {
+          element.style.display = "none";
+        },
+      };
+      const game = {
+        start(quiz) {
+          this.questions = [...quiz]; // what is ...?
+          this.score = 0;
+          for (const question of this.questions) {
+            this.question = question;
+            this.ask();
+            view.hide(view.start);
+          }
+          this.gameOver();
+        },
+        ask() {
+          const question = `What is ${this.question.name}'s real name?`;
+          view.render(view.question, question);
+          const response = prompt(question);
+          //const response = prompt(question);
+          this.check(response);
+        },
+        check(response) {
+          const answer = this.question.realName;
+          if (response === answer) {
+            view.render(view.result, "Correct!", { class: "correct" });
+            alert("Correct!");
+            this.score++;
+            view.render(view.score, this.score);
+          } else {
+            view.render(
+              view.result,
+              `Wrong! The correct answer was ${answer}`,
+              { class: "wrong" }
+            );
+            alert(`Wrong! The correct answer was ${answer}`);
+          }
+        },
+        gameOver() {
+          // alert(
+          view.render(
+            view.info,
+            `Game Over, you scored ${this.score} point${
+              this.score !== 1 ? "s" : " "
+            }.`
+          );
+          view.show(view.start);
+        },
+      };
+     
       
+      view.start.addEventListener("click", () => game.start(quiz), false);
+      game.start(quiz);
     </script>
-  </head>
+
+    <header>
+      <h1 id="title">Justice League</h1>
+    </header>
+    <ul id="roster">
+      <li class="hero">Superman</li>
+      <li class="vigilante hero" id="bats">Batman</li>
+      <li class="hero">Wonder Woman</li>
+    </ul>
+  </body>
+  <script>
+    const heroes = document.getElementById("roster");
+    const flash = document.createElement("li");
+    flash.textContent = "Flash";
+    heroes.appendChild(flash);
+  </script>
 </html>
 
 <!-- 
@@ -190,5 +257,87 @@ Math.random()returns fandom number between 0-1 (not including 1).
 
  \S matches any non-whitespace character, and is equivalent to [^ \t\r\n\f]
  
+ Ch 6 Notes
+
+ Getting Elements
+    methods to access elements return node objects or node lists. 
+    Document.body
+    Document.images
+    Document.links- all <a> or <area> with a href. 
+    Document.anchors - all <a> with a name attribute
+    Document.forms
+
+    also:
+    document.getElementByID('')
+    document.getElementsByTagName('')
+    document.getElementByClassName('')
+    document.querySelector('')- returns first element that matches a CSS selector
+    document.querySelectorAll('')
+    to find text value use .textContent property
+
+ Getting and setting attributes
+
+        .getAttribute('class')
+        .setAttribute('wantChanged','newValue')
+        .className-lets you name the class. however .classList is perferred. 
+        .classList.remove('class')
+        .classList.toggle('class') removes if has it adds if doesn't. 
+        .classList.contains('')
+ updating DOM with dynamic markup
+
+        const objectName= document.createElement('elementType'); 
+        const newText= document.createTextNode('text')
+        objectName.appendChild(newText); 
+
+ function createElement (tag,text) {
+    const el = document.createElement(tag);
+    el.textContent = text;
+    return el
+    }
+
+    insertBefore(newNode,nodeAfter) places a new elment before an element.  called on parent node. 
+    .removeChild
+    .replaceChild(newNode,replacedNode)
+    .innerHTML refers to inside of a node as a string or used to replace it.  
+ Changing CSS of element
+  uses .style property. 
+  all CS properties get written in camelCase instead of dashes...aka background-color is backgroundColor
+  .style.display='none' hides it. 'block' shows it. 
+
+  Ch 7 notes
+
+Adding event listeners
+    document.body.addEventListener("click", doSomething);
+    <p onclick="console.log('You Clicked Me!')">Click Me</p> - good..not most reccomended.
+    document.onclick = function (){ console.log('You clicked on the page!'); } --better
+    document.body.addEventListener('click',doSomething);--best.
+The event object
+    when event is triggered..calls the function with parameter about the event.  ex: 
+    function doSomething(event){
+        console.log(event.type);
+    }
+    .target = where it was fired. 
+Mouse, keyboard and touch events
+ click, mousedown, mouseup, dblclick, mouseover, mouseout, keydown, keypress, keyup
+ touchend, touchmove, touchenter, touchleave,touchcancel(finger leaves screen or too many fingers)
  
+ touch events get super tricky to implement right.  
+ shift, control, and alt don't fire as keypress because they don't show on screen. Can add code to overcome.  
+ ex: addEventListener('keydown', (event) => {
+if (event.key === 'c' && event.ctrlKey) {
+        console.log('Action canceled!');
+    }
+});
+addEventListener('click', (event) => {
+    if (event.shiftKey) {
+        console.log('A Shifty Click!');
+    }
+});
+
+Removing event listeners
+    .removeEventListener()
+Stopping default behavior
+    . preventDefault()  not a good choice to use...confuses people. 
+Event propagation
+clicking an element clicks everything it's nested in...so clicking child does parents. 
  -->

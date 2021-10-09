@@ -1,0 +1,491 @@
+<!--
+Ch 8 Notes Forms
+    Form controls <form> aka input fiels, select menus, buttons. 
+
+    Accessing form elements
+        document.forms[0] returns first object. 
+        or documents.forms.['search']; 
+    Form properties and methods
+        form.submit() submits form automatically. 
+        can be done manually with button with submit attribute. 
+        <button type='submit'>Submit</button> 
+        form.reset() resets everthing. Or button with type 'reset'. (frowned upon)
+    Form events
+        focuse event occurs when focused on.  
+    Submitting a form
+        see sample code
+    Retrieving and changing values from a form
+        see sample code
+    Other Controls-
+    <input>, <select>, <textarea>,<button>
+    Form validation
+        checks if form filled out right. Easy way is to add required to an attribute. 
+ 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Search</title>
+    <style>
+        .error{
+            background: #f99;
+            border: #900 1px solid;
+            display: none;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>Search Form</h1>
+    <form name="search" action="/search">
+      <input name="searchInput" />
+      <button type="submit">Search</button>
+    </form>
+    <h1>Hero Form</h1>
+    <form id="hero">
+      <label for="heroName"
+        >Name:
+        <input
+          type="text"
+          id="heroName"
+          name="heroName"
+          autofocus
+          placeholder="Your Super Hero Name"
+          maxlength="32"
+          required
+        />
+      </label>
+
+      <p>Super Powers:</p>
+      <label for="flight"
+        >Flight:
+        <input type="checkbox" id="flight" value="Flight" name="powers" />
+      </label>
+      <label for="strength"
+        >Super Strength:
+        <input type="checkbox" id="strength" value="Strength" name="powers" />
+      </label>
+      <label for="speed"
+        >Super Speed:
+        <input type="checkbox" id="speed" value="Super Speed" name="powers" />
+      </label>
+      <label for="energy"
+        >Energy Blasts:
+        <input
+          type="checkbox"
+          id="energy"
+          value="Energy Blasts"
+          name="powers"
+        />
+      </label>
+      <label for="telekinesis"
+        >Telekinesis:
+        <input
+          type="checkbox"
+          id="telekinesis"
+          value="Telekinesis"
+          name="powers"
+        />
+      </label>
+      <p>What type of hero are you?</p>
+      <label for="hero"
+        >Hero:
+        <input type="radio" name="category" value="Hero" id="hero" />
+      </label>
+      <label for="villain"
+        >Villain:
+        <input type="radio" name="category" value="Villain" id="villain" />
+      </label>
+      <label for="anti-hero"
+        >Anti-Hero:
+        <input type="radio" name="category" value="Antihero" id="anti-hero" />
+      </label>
+      <label for="age"
+        >Age: <input type="number" id="age" name="age" min="0" step="1"
+      /></label>
+      <label for="City"
+        >Base of Operations:
+        <select name="city" id="city">
+          <option value="" selected>Choose a City</option>
+          <option value="Metropolis">Metropolis</option>
+          <option value="Gotham City">Gotham City</option>
+          <option value="Keystone City">Keystone City</option>
+          <option value="Coast City">Coast City</option>
+          <option value="Star City">Star City</option>
+        </select>
+        <label for="origin"
+          >Origin Story:
+          <textarea id="origin" name="origin" rows="20" cols="60"></textarea>
+        </label>
+      </label>
+
+      <button type="reset">Reset</button>
+
+      <button type="submit">Submit</button>
+    </form>
+    <h1>Quiz Ninja</h1>
+    <section class="dojo">
+      <div class="quiz-body">
+        <header>
+          <div id="score">Score: <strong>0</strong></div>
+          <h1>Quiz Ninja!</h1>
+        </header>
+        <div id="question"></div>
+        <div id='response'></div>
+        <!--<form id='response'>
+          <input name='answer' type= 'text'>
+          <button type= 'submit'>Submit Answer</button>
+        </form> -->
+        <div id="result"></div>
+        <div id="info"></div>
+        <button id="start">Click to Start</button>
+      </div>
+    </section>
+    <script> // quiz ninja's script. 
+    function random(a,b=1) {
+    // if only 1 argument is provided, we need to swap the values of a and b
+    if (b === 1) {
+        [a,b] = [b,a];
+    }
+    return Math.floor((b-a+1) * Math.random()) + a;
+    }function shuffle(array) {
+      for (let i = array.length; i; i--) {
+        let j = random(i)-1;
+        [array[i - 1], array[j]] = [array[j], array[i - 1]];
+    }
+}
+      const quiz = [
+        { name: "Superman", realName: "Clark Kent" },
+        { name: "Wonder Woman", realName: "Diana Prince" },
+        { name: "Batman", realName: "Bruce Wayne" },
+        { name: "The Hulk",realName: "Bruce Banner" },
+        { name: "Spider-man",realName: "Peter Parker" },
+        { name: "Cyclops",realName: "Scott Summers" }
+      ];
+      const view = {
+        start: document.getElementById("start"),
+        score: document.querySelector("#score strong"),
+        question: document.getElementById("question"),
+        result: document.getElementById("result"),
+        response: document.querySelector('#response'),
+        info: document.getElementById("info"),
+        render(target, content, attributes) { // render updates elements takes element to dispay,content, object of html attributes)
+          for (const key in attributes) {
+            target.setAttribute(key, attributes[key]);
+          }
+          target.innerHTML = content;
+        },
+        show(element) {
+          element.style.display = "block";
+        },
+        hide(element) {
+          element.style.display = "none";
+        },
+        buttons(array){
+        return array.map(value => `<button>${value}</button>`).join('');
+        },
+       // setup(){
+         // this.show(this.question);
+         // this.show(this.response);
+         // this.show(this.result);
+         // this.hide(this.start);
+         // this.render(this.score,game.score);
+         // this.render(this.result,'');
+          //this.render(this.info,'');
+         // this.resetForm();
+        //},
+        //resetForm(){
+          //this.response.answer.value= '';
+          //this.response.answer.focus(); 
+        //},
+        teardown(){
+          this.hide(this.question);
+          this.hide(this.response);
+          this.show(this.start); 
+        }
+      };
+      const game = {
+        start(quiz) {
+          this.score=0;
+          this.questions=[...quiz];  //what does ... do?  I think it passes all of the array? 
+          //view.setup(); 
+          this.ask(); 
+          
+        },
+        ask(name) {
+          console.log('ask() invoked');
+          if(this.questions.length >2){
+          shuffle(this.questions);  
+            
+         // if(this.questions.length >0){
+            this.question= this.questions.pop();
+            const options = [this.questions[0].realName, this.questions[1].realName, this.question.realName];
+            shuffle(options);
+            const question = `What is ${this.question.name}'s' real name? `;
+            view.render(view.question,question);
+            view.render(view.response,view.buttons(options));
+         }else{
+           this.gameOver(); 
+          }
+        },
+        check(event){
+          console.log('check(event) invoked');
+          const response= event.target.textContent; 
+          const answer= this.question.realName;
+          //event.preventDefault();
+        //const response = view.response.answer.value;
+        //const answer = this.question.realName;
+        if(response === answer){
+        view.render(view.result,'Correct!',{'class':'correct'});
+        this.score++;
+        view.render(view.score,this.score);
+        } else {
+          view.render(view.result,`Wrong! The correct answer was ${answer}`,{'class':'wrong'});
+        }
+    this.ask();
+      },
+        gameOver() {
+          view.render(view.info,`Game Over, you scored ${this.score} point${this.score !== 1 ? 's' : ''}`);
+          view.teardown();
+        },
+      };
+     
+      
+      view.start.addEventListener("click", () => game.start(quiz), false);
+      
+      view.response.addEventListener('click', (event) => game.check(event), false);
+     // view.hide(view.response);
+      game.start(quiz);
+    </script>
+
+    </script>
+    <script>
+      const form = document.forms.search;
+      const input = form.elements.searchInput;
+      //input.addEventListener("focus", () => alert("focused"), false);
+      //input.addEventListener("blur", () => alert("blurred"), false);
+      input.addEventListener(
+        "focus",
+        function () {
+          if (input.value === "Search Here") {
+            input.value = "";
+          }
+        },
+        false
+      );
+      //Blur doesn't seem to be working right...why?
+      input.addEventListener(
+        "blur",
+        function () {
+          if (input.value === "") {
+            input.value = "Search Here";
+          }
+        },
+        false
+      );
+      input.addEventListener("change", () => alert("changed"), false);
+      form.addEventListener("submit", search, false);
+
+      function search() {
+        alert(" Form Submitted");
+      }
+      function search(event) {
+        alert(`You Searched for: ${input.value}`);
+        event.preventDefault();
+      }
+    </script>
+    <script>
+      const form2 = document.forms["hero"];
+      form.addEventListener("submit", validateInline, false);
+      const label = form2.querySelector("label");
+      const error = document.createElement("div");
+      error.classList.add("error");
+      error.textContent = "! Your name is not allowed to start with X.";
+      label.append(error);
+      
+// This validate doesnt work either.  
+      function validateInline() {
+        const heroName = this.value.toUpperCase();
+        if (heroName.startsWith("X")) {
+          error.style.display = "block";
+        } else {
+          error.style.display = "none";
+        }
+      }
+      //this validate isn't working...why?
+      // function validate(event) {
+      // const firstLetter = form.heroName.value[0];
+      //if (firstLetter.toUpperCase() === "X") {
+      //event.preventDefault();
+      //alert("Your name is not allowed to start with X!");
+      //}
+      //}
+      form2.addEventListener("submit", makeHero, false);
+
+      function makeHero(event) {
+        event.preventDefault(); // prevent the form from being submitted
+
+        const hero = {}; // create an empty object
+
+        hero.name = form2.heroName.value; // create a name property based on the input field's value
+        hero.powers = [];
+        for (let i = 0; i < form2.powers.length; i++) {
+          if (form2.powers[i].checked) {
+            hero.powers.push(form2.powers[i].value);
+          }
+        }
+        hero.age = form2.age.value;
+        hero.category = form2.category.value;
+        hero.city = form2.city.value;
+        hero.origin = form2.origin.value;
+        alert(JSON.stringify(hero)); // convert object to JSON string and display in alert dialog
+        return hero;
+      }
+    </script>
+  </body>
+</html>
+<!--
+  Ch 12 Notes:  Object Oriented Programming
+An introduction to OOP
+  Encapsulation-  Keep all programming logic inside the object.  Use methods to implement. 
+  Polymorphism- object share methods, but can also overide it with their own version. 
+  Inheritance-  takes existing object and adds more properties and methods to improve.  
+
+Constructor functions
+  object literal notation-
+  const dice = {
+    sides: 6,
+    roll() {
+        return Math.floor(this.sides * Math.random() + 1)
+    }    
+}
+
+constructor function- 
+const Dice = function(sides=6){ // parenthesis are only needed if theres a paramenter with a default value.)
+    this.sides = sides;
+    this.roll = function() {
+        return Math.floor(this.sides * Math.random() + 1)
+    }
+}
+
+or
+
+const redDice = new Dice;
+redDice instanceof Dice
+<< true
+
+Using classes in JavaScript
+this is new as of ES6.  
+how to do- 
+ex: class Dice {
+    constructor(sides=6) {
+        this.sides = sides;
+    }
+
+    roll() {
+        return Math.floor(this.sides * Math.random() + 1)
+    }
+}
+to make instance of- 
+const blueDice= new Dice(20); 
+
+Prototypes- Every class has properties shared by every instance of that class. Normally you add in declaration.
+Can also be added by using .prototype.  This acts both for future and retroactive instances. 
+example: 
+Turtle.protoype.weapon= 'hands'; 
+or
+Turtle.prototype.attack=function(){
+  return `Feel the power of my ${this.weapon}!`"; 
+}
+
+Public and private methods
+methods are public by default.  To limit...use variable scope.  
+ex: 
+class Turtle {
+    constructor(name,color) {
+        this.name = name;
+        let _color = color;
+        this.setColor = color => { return _color = color; }
+        this.getColor = () => _color;
+    }
+}
+In this...color is created inside which means it can only be used inside.  
+Inheritance
+  Things can be instances of instances of instances.  can use Object.getPrototypeOf(obj) 
+  to find one level up.  can nest them inside of each other to get multiple levels up. 
+Creating objects from objects
+  Objects are objects. all are enumberale (can use for in) or not.  can use propertyIsEnumerable() to check. 
+
+  Can extend...aka
+  class NinjaTurtle extends Turtle{
+    constructor(name){
+      super(name);
+      this.weapon= 'hands'; 
+    }
+  }
+
+  to overide:  
+  class Turtle {
+    // other turtle methods here
+
+    toString() {
+        return `A turtle called ${this.name}`;
+    }
+  }
+
+  raph.toString();
+  << 'A turtle called Raphael'
+Adding methods to built-in objects
+  can add more methods to built in objects like number, string, and array to add more functionality.
+  Called monkey-patching...frowned on in JavaScript...super coommon in Ruby. 
+ex: 
+  Number.prototype.isEven = function() {
+    return this%2 === 0;
+}
+
+Number.prototype.isOdd = function() {
+    return this%2 === 1;
+}
+Mixins- adds properities and methods to another object without inheritance.  provided by
+Object.assign().  
+example: 
+const a = {};
+
+const b = { name: 'JavaScript' };
+
+Object.assign(a,b);
+<< { name: 'JavaScript' }
+
+a.name
+<< 'JavaScript'
+
+Chaining functions-  methods that return this can be chained together.
+example: superman.fly().move().xray(); 
+
+This and that-  this can lose scipt pretty easy.  For example in 
+superman.findFriends = function(){
+    this.friends.forEach(function(friend) {
+        console.log(`${friend.name} is friends with ${this.name}`);
+    }
+    );
+    the this.name falls out of scope.  
+    Common solution-  
+    const that =this; 
+    console.log(`${friend.name} is friends with ${that.name}`)
+
+Borrowing methods from prototypes-  can borrow by making reference without parenthisis. aka: 
+const fly = superman.fly;
+fly.call(batman); 
+most common with arrays
+like
+const slice= Array.prototype.slice; 
+slice.call(arguments, 1,3); 
+
+        
+-->
+<!--
+  Ch 15 Notes:  Modular Javascript
+  ideal to use small single purpose modules that can be mixed and matched. modules are always
+  in strict mode.  all variables are limited in scope to in the module.  this is undefined. 
+  You can import and export things from them.  Can only use 1 default export.  
+-->

@@ -1,0 +1,213 @@
+<!--
+    Testing and Debugging
+
+Errors, exceptions, and warnings 
+    error= when something goes wrong.
+    exceptions- an error that returns a value that helps 
+    warning- mini errors that won't make the program crash. 
+
+The importance of testing and debugging
+    Tends to fall silently in background...this is bad because it's hard to trace...make
+    your errors crash loudly but gracefully.  aka..easy to fix but pleasant for user.
+Strict mode-  marks poor style or outdated styles as errors.  Reccomended for clarity and speed.
+to turn on put 'use strict'; on first line of javascript file.  Can also be used per function. Best 
+practice is to wrap your own code in a function labeled as string. 
+
+Linting tools help fix bad syntax, spacing errors etc. Ex: JS Lint, JS Hint, ES Lint. 
+
+
+Debugging in the browser- helpful to use breakpoints.  often done with alert(), or console.log(), or 
+console.trace()which logs the stack.  debugger keyword helps too.  makes a pause. 
+
+Error objects-  created by the host enviroment when exception occurs...aka
+const error= new Error("Oops"); 
+
+Throwing exceptions- halts program when you throw something.  causes it to stop.  
+Best practice is to throw an error... aka
+throw new Error('something has gone wrong');  but also works with just 
+throw 2; 
+
+
+Exception handling-  program should gracefully catch errors and not just break.  ex:
+function imaginarySquareRoot(number) {
+    'use strict';
+    try {
+        return String(squareRoot(number));
+    } catch(error) {
+        return squareRoot(-number)+'i';
+    }
+}
+can add a finally after it.  
+Testing frameworks-  Jest is a common one.  Installed by typing npm install -g jest in terminal.  
+ex: function squareRoot(number) {
+    'use strict';
+    if (number < 0) {
+        throw new RangeError("You can't find the square root of negative numbers")
+    }
+    return Math.sqrt(number);
+};
+
+test('square root of 4 is 2', () => {
+expect(squareRoot(4)).toBe(2);
+});
+
+to run the test navigate to folder in terminal and use jest -c {} command. 
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Search</title>
+    <style>
+      .error {
+        background: #f99;
+        border: #900 1px solid;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz Ninja</h1>
+    <section class="dojo">
+      <div class="quiz-body">
+        <header>
+          <div id="score">Score: <strong>0</strong></div>
+          <h1>Quiz Ninja!</h1>
+        </header>
+        <div id="question"></div>
+        <div id="response"></div>
+        <!--<form id='response'>
+          <input name='answer' type= 'text'>
+          <button type= 'submit'>Submit Answer</button>
+        </form> -->
+        <div id="result"></div>
+        <div id="info"></div>
+        <button id="start">Click to Start</button>
+      </div>
+    </section>
+    <script>
+        'use strict';
+      // quiz ninja's script.
+      function random(a, b = 1) {
+        // if only 1 argument is provided, we need to swap the values of a and b
+        if (b === 1) {
+          [a, b] = [b, a];
+        }
+        return Math.floor((b - a + 1) * Math.random()) + a;
+      }
+      function shuffle(array) {
+        for (let i = array.length; i; i--) {
+          let j = random(i) - 1;
+          [array[i - 1], array[j]] = [array[j], array[i - 1]];
+        }
+      }
+      const quiz = [
+        { name: "Superman", realName: "Clark Kent" },
+        { name: "Wonder Woman", realName: "Diana Prince" },
+        { name: "Batman", realName: "Bruce Wayne" },
+        { name: "The Hulk", realName: "Bruce Banner" },
+        { name: "Spider-man", realName: "Peter Parker" },
+        { name: "Cyclops", realName: "Scott Summers" },
+      ];
+      const view = {
+        start: document.getElementById("start"),
+        score: document.querySelector("#score strong"),
+        question: document.getElementById("question"),
+        result: document.getElementById("result"),
+        response: document.querySelector("#response"),
+        info: document.getElementById("info"),
+        render(target, content, attributes) {
+          // render updates elements takes element to dispay,content, object of html attributes)
+          for (const key in attributes) {
+            target.setAttribute(key, attributes[key]);
+          }
+          target.innerHTML = content;
+        },
+        show(element) {
+          element.style.display = "block";
+        },
+        hide(element) {
+          element.style.display = "none";
+        },
+        buttons(array) {
+          return array.map((value) => `<button>${value}</button>`).join("");
+        },
+        teardown() {
+          this.hide(this.question);
+          this.hide(this.response);
+          this.show(this.start);
+        },
+      };
+      const game = {
+        start(quiz) {
+          console.log("start() invoked");
+          this.score = 0;
+          this.questions = [...quiz]; //what does ... do?  I think it passes all of the array?
+          //view.setup();
+          this.ask();
+        },
+        ask(name) {
+          console.log("ask() invoked");
+          if (this.questions.length > 2) {
+            shuffle(this.questions);
+
+            // if(this.questions.length >0){
+            this.question = this.questions.pop();
+            const options = [
+              this.questions[0].realName,
+              this.questions[1].realName,
+              this.question.realName,
+            ];
+            shuffle(options);
+            const question = `What is ${this.question.name}'s' real name? `;
+            view.render(view.question, question);
+            view.render(view.response, view.buttons(options));
+          } else {
+            this.gameOver();
+          }
+        },
+        check(event) {
+          console.log("check(event) invoked");
+          const response = event.target.textContent;
+          const answer = this.question.realName;
+          //event.preventDefault();
+          //const response = view.response.answer.value;
+          //const answer = this.question.realName;
+          if (response === answer) {
+            view.render(view.result, "Correct!", { class: "correct" });
+            this.score++;
+            view.render(view.score, this.score);
+          } else {
+            view.render(
+              view.result,
+              `Wrong! The correct answer was ${answer}`,
+              { class: "wrong" }
+            );
+          }
+          this.ask();
+        },
+        gameOver() {
+          console.log("gameOver() invoked");
+          view.render(
+            view.info,
+            `Game Over, you scored ${this.score} point${
+              this.score !== 1 ? "s" : ""
+            }`
+          );
+          view.teardown();
+        },
+      };
+
+      view.start.addEventListener("click", () => game.start(quiz), false);
+
+      view.response.addEventListener(
+        "click",
+        (event) => game.check(event),
+        false
+      );
+      // view.hide(view.response);
+      game.start(quiz);
+    </script>
+  </body>
+</html>

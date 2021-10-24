@@ -2,18 +2,20 @@ export function readFromLS(key){
     var toDoList=null; 
     if (JSON.parse(localStorage.getItem(key))!= null)
     toDoList = JSON.parse(localStorage.getItem(key));
-    console.log("toDoList: "+ toDoList);
+
     return toDoList; 
 }
 
 export function writeToLS(key,new_toDo){
     //var new_data = document.getElementById("newItem").value;
    // localStorage.setItem(key,'[]')
+
   
        var old_data= JSON.stringify(localStorage.getItem(key));
        old_data += JSON.stringify(new_toDo);
+       if (key != undefined){
        localStorage.setItem(key, old_data);
-   
+  }
 
 
    /* var string= JSON.stringify(localStorage.getItem(key)); 

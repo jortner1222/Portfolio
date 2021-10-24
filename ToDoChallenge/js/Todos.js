@@ -11,8 +11,7 @@ export default class ToDos {
 
     toDoList.push(readFromLS(task1.task));
     //this.showToDoList(); 
-    //assign function to onClick buttons. 
-    document.getElementById("addButton").onclick= this.addToDo(); 
+   
   }
   // gets my toDo list array
   getAllToDos() {
@@ -26,15 +25,7 @@ export default class ToDos {
     return this.getAllToDos().find((taskName) => toDoList.name === taskName);
   }
 
-  //add a task.
-  addToDo() {
-    
-    let newTask= document.getElementById("newItem").value;
-    if(newTask!=undefined){ 
-    saveTodo(newTask);}
-    this.showToDoList(); 
-    
-  }
+  
   removeTask(task) {
 
     //const index = toDoList.indexOf(name);
@@ -49,25 +40,39 @@ export default class ToDos {
       this.parentElement.removeChild(this.parentElement.firstChild);
     renderToDoList(this.parentElement, toDoList);
   }
+  addToDo() {
+    document.getElementById("addButton").onclick=this; 
+    let newTask= document.getElementById("newItem").value;
+    if(newTask!=undefined){ 
+    this.saveTodo(newTask);}
+    this.showToDoList(); 
+    
+  }
+  saveTodo(task){
+    console.log("here")
+    var newTask = {task: task, completed : false}
+    console.log(newTask.task); 
+    toDoList.push(newTask); 
+    writeToLS(newTask.task, toDoList);} 
+
   
 } 
 
 // methods responsible for building HTML.  
-function saveTodo(task){
-  var newTask = {task: task, completed : false}
-  toDoList.push(newTask); 
-  writeToLS(task.task, toDoList);} 
 
-
+/*
 function getTodos(key){
 toDoList.push(readFromLS(key)); 
 return toDoList; 
 }
+*/
+//add a task.
 
 
 function  renderToDoList(parent, tasks) {
   if (tasks != undefined){
     tasks.forEach(task => {
+      if (task.task!="" && task.task != undefined)
       parent.appendChild(renderOneTask(task));
       
     });}else{
@@ -77,7 +82,7 @@ function  renderToDoList(parent, tasks) {
 
  function  renderOneTask(task) {
    //make list item
-    console.log(task);
+
     const item = document.createElement('li');
     var text= document.createTextNode(task.task); 
     //add checkbox
@@ -110,12 +115,12 @@ function  renderToDoList(parent, tasks) {
     button.onclick= function() {removeTask(task)};
     item.appendChild(button);
   
-    return item;
-  } 
+    return item;}
+   
   function removeTask(task){
     console.log("task removed");
   }
-
+ 
   
 
     

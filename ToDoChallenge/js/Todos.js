@@ -1,5 +1,5 @@
 import {readFromLS, writeToLS} from './ls.js';
-let toDoList=[]
+let toDoList=readFromLS();
 //const key= "todo"; 
 
 export default class ToDos {
@@ -10,14 +10,16 @@ export default class ToDos {
     //writeToLS(task1.task, task1);
     toDoList= readFromLS();
     
-    //this.showToDoList(); 
+    this.showToDoList(toDoList); 
    
   }
-  // gets my toDo list array
+  
+  //gets my toDo list array
   getAllToDos() {
-    
     return toDoList;
+  
   }
+  /*
   // get just one task.
   getTaskByName(taskName) {
       console.log(taskName);
@@ -25,27 +27,27 @@ export default class ToDos {
     return this.getAllToDos().find((taskName) => toDoList.name === taskName);
   }
 
-  
+  */
   removeTask(task) {
 
     //const index = toDoList.indexOf(name);
     //toDoList.splice(index, 1);
     console.log ("removed "+ task.name);
-    task.showToDoList(); 
+    task.showToDoList(toDoList); 
   }
  
   //show a list of tasks in the parentElement
-  showToDoList() {
+  showToDoList(list) {
     while(this.parentElement.firstChild)
       this.parentElement.removeChild(this.parentElement.firstChild);
-    renderToDoList(this.parentElement, toDoList);
+    renderToDoList(this.parentElement, list);
   }
   addToDo() {
     document.getElementById("addButton").onclick=this; 
     let newTask= document.getElementById("newItem").value;
     if(newTask!=undefined){ 
     this.saveTodo(newTask);}
-    this.showToDoList(); 
+    this.showToDoList(toDoList); 
     
   }
   saveTodo(task){
@@ -54,9 +56,29 @@ export default class ToDos {
     console.log(newTask.task); 
     writeToLS(task, newTask); 
     toDoList = readFromLS();
-    this.showToDoList(); 
+    this.showToDoList(toDoList); 
   }
-
+  filterList(){
+   let newList= this.getAllToDos();  
+   let all = document.getElementById("all");
+   let complete = document.getElementById("completed");
+   let active =  document.getElementById("active");
+   console.log(newList); 
+   if(complete.checked){
+     newList=newList.filter(this.checkDone); 
+   }
+   if(active.checked){
+     newList=newList.filter(this.checkNotDone);
+   }
+  this.showToDoList(newList);
+  }
+  checkDone(item){
+   return item.completed; 
+  }
+  checkNotDone(item){
+    return item.completed==false; 
+   }
+  
   
 } 
 
@@ -75,8 +97,8 @@ function  renderToDoList(parent, tasks) {
   if (tasks != undefined){
     console.log ("the tasks are " + tasks)
     tasks.forEach(task => {
-      let todo=JSON.parse(task); 
-      parent.appendChild(renderOneTask(todo));
+      //let todo=JSON.parse(task); 
+      parent.appendChild(renderOneTask(task));
       
     });
   }
@@ -86,7 +108,12 @@ function  renderToDoList(parent, tasks) {
    //make list item
     console.log ("task is: " + task.completed)
     const item = document.createElement('li');
+    if (task.completed)
+    item.className="done";
+    else
+    item.className="notDone";
     var text= document.createTextNode(task.task); 
+   
     //add checkbox
     const checkbox= document.createElement('input');
     checkbox.type ="checkbox";
@@ -125,4 +152,5 @@ function  renderToDoList(parent, tasks) {
     localStorage.removeItem(task.task);
     console.log("task removed"); 
   }
+ 
  

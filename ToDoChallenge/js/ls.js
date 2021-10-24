@@ -4,7 +4,7 @@ export function readFromLS(){
     //toDoList = JSON.parse(localStorage.getItem(key));
     let keys= Object.keys(localStorage);
     for (let key of keys){
-        toDoList.push(localStorage.getItem(key));
+        toDoList.push(JSON.parse(localStorage.getItem(key)));
     }
     console.log(toDoList);
     return toDoList; 

@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
 
 window.onload=function(){
 const button= document.getElementById("addButton");
-button.addEventListener('click',function(){ myToDos.addToDo()});
+button.addEventListener('click', function(){myToDos.addToDo()});
 //document.getElementById("addButton").onclick=function() {myToDos.addToDo()};
 document.getElementById("all").onclick=function(){myToDos.filterList();}
 document.getElementById("active").onclick=function(){myToDos.filterList();}

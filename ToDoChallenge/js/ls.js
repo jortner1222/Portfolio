@@ -1,8 +1,12 @@
-export function readFromLS(key){
-    var toDoList=null; 
-    if (JSON.parse(localStorage.getItem(key))!= null)
-    toDoList = JSON.parse(localStorage.getItem(key));
-
+export function readFromLS(){
+    var toDoList= []; 
+    //if (JSON.parse(localStorage.getItem(key))!= null)
+    //toDoList = JSON.parse(localStorage.getItem(key));
+    let keys= Object.keys(localStorage);
+    for (let key of keys){
+        toDoList.push(localStorage.getItem(key));
+    }
+    console.log(toDoList);
     return toDoList; 
 }
 
@@ -11,11 +15,11 @@ export function writeToLS(key,new_toDo){
    // localStorage.setItem(key,'[]')
 
   
-       var old_data= JSON.stringify(localStorage.getItem(key));
-       old_data += JSON.stringify(new_toDo);
-       if (key != undefined){
-       localStorage.setItem(key, old_data);
-  }
+       //var old_data= JSON.stringify(localStorage.getItem(key));
+       //old_data += JSON.stringify(new_toDo);
+      // if (key != undefined){
+       localStorage.setItem(key, JSON.stringify(new_toDo));
+  //}
 
 
    /* var string= JSON.stringify(localStorage.getItem(key)); 

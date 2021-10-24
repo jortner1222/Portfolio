@@ -1,4 +1,4 @@
-import ToDos from './Todos.js';
+import ToDos  from './Todos.js';
 //import { addToDo } from './Todos';
 //on load grab the array and insert it into the page
 const myToDos = new ToDos('taskList');

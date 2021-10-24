@@ -6,10 +6,10 @@ export default class ToDos {
   //constructor
   constructor(elementId) {
     this.parentElement = document.getElementById(elementId);
-    let task1= {task: "make bed", completed: "false"};
-    localStorage.setItem(task1.task,JSON.stringify(task1));
-
-    toDoList.push(readFromLS(task1.task));
+    //let task1= {task: "make bed", completed: false};
+    //writeToLS(task1.task, task1);
+    toDoList= readFromLS();
+    
     //this.showToDoList(); 
    
   }
@@ -52,8 +52,10 @@ export default class ToDos {
     console.log("here")
     var newTask = {task: task, completed : false}
     console.log(newTask.task); 
-    toDoList.push(newTask); 
-    writeToLS(newTask.task, toDoList);} 
+    writeToLS(task, newTask); 
+    toDoList = readFromLS();
+    this.showToDoList(); 
+  }
 
   
 } 
@@ -71,34 +73,36 @@ return toDoList;
 
 function  renderToDoList(parent, tasks) {
   if (tasks != undefined){
+    console.log ("the tasks are " + tasks)
     tasks.forEach(task => {
-      if (task.task!="" && task.task != undefined)
-      parent.appendChild(renderOneTask(task));
+      let todo=JSON.parse(task); 
+      parent.appendChild(renderOneTask(todo));
       
-    });}else{
-    var text= document.createTextNode("Empty List");
-    parent.appendChild(text); }
+    });
   }
+}
 
  function  renderOneTask(task) {
    //make list item
-
+    console.log ("task is: " + task.completed)
     const item = document.createElement('li');
     var text= document.createTextNode(task.task); 
     //add checkbox
     const checkbox= document.createElement('input');
     checkbox.type ="checkbox";
-    checkbox.value= task.completed; 
+    checkbox.checked= task.completed; 
     checkbox.name= task.task; 
     checkbox.addEventListener('change', function(){
       if (this.checked)
       {
           task.completed=true;;
           console.log(task.task + " completed. ")
+          writeToLS(task.task, task);  
       }
       else{
           task.completed=false; 
           console.log(task.task + " not completed. ")
+          writeToLS(task.task, task);
       }
     })
     item.appendChild(checkbox);
@@ -112,15 +116,13 @@ function  renderToDoList(parent, tasks) {
     var text= document.createTextNode("Remove")
     button.appendChild(text);  
     button.id= "close"; 
-    button.onclick= function() {removeTask(task)};
+    button.onclick= function() {removeTask(task); location.reload();};
     item.appendChild(button);
   
     return item;}
    
   function removeTask(task){
-    console.log("task removed");
+    localStorage.removeItem(task.task);
+    console.log("task removed"); 
   }
  
-  
-
-    

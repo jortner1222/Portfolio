@@ -11,4 +11,5 @@ document.getElementById("addButton").onclick=function() {myToDos.addToDo()};
 document.getElementById("all").onclick=function(){myToDos.filterList();}
 document.getElementById("active").onclick=function(){myToDos.filterList();}
 document.getElementById("completed").onclick=function(){myToDos.filterList();}
+myToDos.filterList();
 }

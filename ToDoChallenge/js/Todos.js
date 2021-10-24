@@ -38,9 +38,12 @@ export default class ToDos {
  
   //show a list of tasks in the parentElement
   showToDoList(list) {
+    
     while(this.parentElement.firstChild)
       this.parentElement.removeChild(this.parentElement.firstChild);
     renderToDoList(this.parentElement, list);
+    this.updateTotal(list);
+    
   }
   addToDo() {
     document.getElementById("addButton").onclick=this; 
@@ -71,6 +74,7 @@ export default class ToDos {
      newList=newList.filter(this.checkNotDone);
    }
   this.showToDoList(newList);
+  this.updateTotal(newList);
   }
   checkDone(item){
    return item.completed; 
@@ -78,6 +82,10 @@ export default class ToDos {
   checkNotDone(item){
     return item.completed==false; 
    }
+  updateTotal(newList){
+    let length= "Total Items: " + newList.length; 
+    document.getElementById("total").innerText= length;
+  }
   
   
 } 

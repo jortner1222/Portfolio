@@ -4,3 +4,4 @@ const myToDos = new ToDos('taskList');
 window.addEventListener('load', () => {
   myToDos.showToDoList();
 });
+

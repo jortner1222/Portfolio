@@ -5,13 +5,17 @@
         <title>To-Do</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-
+            ul{
+                list-style-type: none;
+            }
         </style>
     </head>
     <body>
         <h1>To-Do List</h1>
-        <form id="list">
+        <div id="list">
             <ul id="taskList"></ul>
+        </div>
+        <form id ="footer">
             <input type= "radio" id="all" value="all" name="filterBy" checked="checked">
             <label for "all">All</label>    
             <input type= "radio" id="active" value="active" name="filterBy">
@@ -19,13 +23,15 @@
             <input type= "radio" id="completed" value= "completed" name="filterBy">
             <label for "all">Completed</label>
             <br>
-            <p id="total">Total tasks: 0</p>
-            <br><br>
-            <label for="newItem">Add a New To-Do Item: </label>
-            <br><br>
-            <textarea id="newItem" name="newItem"> Write your new item here. </textarea>
-            <input type="submit" value="Add">
+        
+            <p id="total">Total tasks: </p>
         </form>
+            <br><br>
+        <input type= "text" id= "newItem" value= "" placeholder="Add a new task here...">
+        <input type="button" id="addButton" value="Add Item"></input>
+            
         <script src="js/main.js" type="module"></script>
+        <script src="js/ls.js" type= "module"></script>
+        <script src="js/Todos.js" type= "module"></script>
     </body>
 </html>

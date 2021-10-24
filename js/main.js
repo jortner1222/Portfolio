@@ -30,7 +30,7 @@ const links =[
         url: "../Portfolio/Week5/hiking-complete.html"
     },
     {
-        label: "To-Do List CHallenge",
+        label: "To-Do List Challenge",
         url: "../Portfolio/ToDoChallenge/index.html"
     },
 ]

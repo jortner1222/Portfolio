@@ -48,7 +48,9 @@ export default class ToDos {
   addToDo() {
     document.getElementById("addButton").onclick=this; 
     let newTask= document.getElementById("newItem").value;
+    console.log("you clicked me!")
     if(newTask!=undefined){ 
+      console.log("no you clicked me!")
     this.saveTodo(newTask);}
     this.showToDoList(toDoList); 
     

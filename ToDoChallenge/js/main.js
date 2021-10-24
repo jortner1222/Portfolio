@@ -7,7 +7,9 @@ window.addEventListener('load', () => {
 });
 
 window.onload=function(){
-document.getElementById("addButton").onclick=function() {myToDos.addToDo()};
+const button= document.getElementById("addButton");
+button.addEventListener('click',function(){ myToDos.addToDo()});
+//document.getElementById("addButton").onclick=function() {myToDos.addToDo()};
 document.getElementById("all").onclick=function(){myToDos.filterList();}
 document.getElementById("active").onclick=function(){myToDos.filterList();}
 document.getElementById("completed").onclick=function(){myToDos.filterList();}

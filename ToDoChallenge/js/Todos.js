@@ -48,17 +48,17 @@ export default class ToDos {
   addToDo() {
     document.getElementById("addButton").onclick=this; 
     let newTask= document.getElementById("newItem").value;
-    console.log("you clicked me!")
+    //console.log("you clicked me!")
     if(newTask!=undefined){ 
-      console.log("no you clicked me!")
+      //console.log("no you clicked me!")
     this.saveTodo(newTask);}
     this.showToDoList(toDoList); 
     
   }
   saveTodo(task){
-    console.log("here")
+    //console.log("here")
     var newTask = {task: task, completed : false}
-    console.log(newTask.task); 
+   // console.log(newTask.task); 
     writeToLS(task, newTask); 
     toDoList = readFromLS();
     this.showToDoList(toDoList); 
@@ -68,7 +68,7 @@ export default class ToDos {
    let all = document.getElementById("all");
    let complete = document.getElementById("completed");
    let active =  document.getElementById("active");
-   console.log(newList); 
+   //console.log(newList); 
    if(complete.checked){
      newList=newList.filter(this.checkDone); 
    }
@@ -105,7 +105,7 @@ return toDoList;
 
 function  renderToDoList(parent, tasks) {
   if (tasks != undefined){
-    console.log ("the tasks are " + tasks)
+   // console.log ("the tasks are " + tasks)
     tasks.forEach(task => {
       //let todo=JSON.parse(task); 
       parent.appendChild(renderOneTask(task));
@@ -116,7 +116,7 @@ function  renderToDoList(parent, tasks) {
 
  function  renderOneTask(task) {
    //make list item
-    console.log ("task is: " + task.completed)
+    //console.log ("task is: " + task.completed)
     const item = document.createElement('li');
     if (task.completed)
     item.className="done";
@@ -133,12 +133,12 @@ function  renderToDoList(parent, tasks) {
       if (this.checked)
       {
           task.completed=true;;
-          console.log(task.task + " completed. ")
+         // console.log(task.task + " completed. ")
           writeToLS(task.task, task);  
       }
       else{
           task.completed=false; 
-          console.log(task.task + " not completed. ")
+         // console.log(task.task + " not completed. ")
           writeToLS(task.task, task);
       }
     })
@@ -160,7 +160,7 @@ function  renderToDoList(parent, tasks) {
    
   function removeTask(task){
     localStorage.removeItem(task.task);
-    console.log("task removed"); 
+    //console.log("task removed"); 
   }
  
  

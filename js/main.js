@@ -29,6 +29,10 @@ const links =[
         label: "Week 5 Team Project",
         url: "../Portfolio/Week5/hiking-complete.html"
     },
+    {
+        label: "To-Do List CHallenge",
+        url: "../Portfolio/ToDoChallenge/index.html"
+    },
 ]
 let list = document.getElementById("TableOfContents")
 function loadList(){

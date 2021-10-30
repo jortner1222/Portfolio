@@ -1,0 +1,401 @@
+<!--
+Ch 11 Notes
+Function properties and methods- functions are objects which means they have properties and methods. All
+have a length that returns # of parameters.  Call method used to refer to object.___ in a parameter. 
+
+Immediately Invoked function expressions - iffy functions. Invoked when defined.  How?  put a () after the declaration. 
+Also wrap it in a ().  
+variables declared within are no longer valid after it's run once.  Often use for initationalization.  Also doesn't need named
+can be just (function{code here})();
+Self-defining functions
+    Can define itself and redefine itself.  How?  make an anonymous function (aka function()) equal to a variable with the 
+    same name as the function in the function.  Defined properties get lost when redefined. 
+Recursive functions
+    Keeps invoking untill a condition is met.  Ex: 
+    function factorial(n) {
+    if (n === 0) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+Callbacks- passing a function as an argument.   JavaScript only runs 1 thing at a time...so callbacks
+can help avoid delays.  They happen last. 
+
+Promises- the future result of an asynchornous option.  It is eithe resolved or rejected. 
+const promise = new Promise( (resolve, reject) => {
+    // initialization code goes here
+    if (success) {
+        resolve(value);
+    } else {
+        reject(error);
+    }
+
+    
+});
+
+const dice = {
+sides: 6,
+    roll() {
+        return Math.floor(this.sides * Math.random()) + 1;
+    }
+}
+
+console.log('Before the roll');
+
+const roll = new Promise( (resolve,reject) => {
+    const n = dice.roll();
+    if(n > 1){
+        setTimeout(()=>{resolve(n)},n*200);
+    } else {
+        setTimeout(()=>reject(n),n*200);
+    }
+});
+
+roll.then(result => console.log(`I rolled a ${result}`) )
+.catch(result => console.log(`Drat! ... I rolled a ${result}`) );
+
+console.log('After the roll');
+
+
+Async functions- async keyword before the function...lets you use await which makes the code wait for 
+the response. 
+
+Functions that return functions-  they can do this.   aka return function(){}; Does need to be assigned to a variable. 
+Closures- functions have access to all variables of the function they were declared in. If outer returns the inner, 
+inner variables get kept alive outside of scope.  
+
+Introduction to functional programming- needs to use pure functions.  Pure functions don't rely on outside values. 
+
+Currying- function doesn't have all arguments needed supplied without calling on other functions.  Makes a series of 
+functions.  I'm honestly unclear on this still.  
+
+Ch 13 Notes AJAX
+
+Clients and servers- client= browswer.  client requests from server, server gets it and returns. 
+serer is usually done with json. Needs either local development server or request from an external website
+with CORS.  Can't have same origin.  
+
+A brief history of Ajax- "asychonronous javascript and xml".  First done with Google Maps and Gmail. 
+Lets you see new things on the page without refreshing.  
+Communicating with the server using the Fetch API ex: 
+    
+    provides a global fetch() method with 1 mandatory argument (the url of the resource.  )
+Receiving data with Ajax
+
+const url = 'https:example.com/data';
+
+fetch(url)
+.then((response) => {
+    if(response.ok) {
+        return response;
+    }
+    throw Error(response.statusText);
+})
+.then( response => // do something with response )
+.catch( error => console.log('There was an error!') )
+
+or
+fetch(url)
+.then( response => response.blob() ); // transforms the data into a blob object
+.then( blob => console.log(blob.type) )
+.catch( error => console.log('There was an error: ', error))
+
+blob() method reads raw data, and returns a promise that resolves with a blob.  
+Sending data with Ajax
+
+another example: 
+
+const url = 'https:example.com/data';
+const headers = new Headers({ 'Content-Type': 'text/plain', 'Accept-Charset' : 'utf-8', 'Accept-Encoding':'gzip,deflate' })
+
+const request = (url,{
+    headers: headers
+})
+
+fetch(request)
+.then( function(response) {
+    if(response.ok) {
+        return response;
+    }
+    throw Error(response.statusText);
+})
+.then( response => // do something with response )
+.catch( error => console.log('There was an error!') )
+
+Recieving information
+
+Form data
+
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Search</title>
+    <style>
+      .error {
+        background: #f99;
+        border: #900 1px solid;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quiz Ninja</h1>
+    <section class="dojo">
+      <div class="quiz-body">
+        <header>
+          <div id="score">Score: <strong>0</strong></div>
+          <h1>Quiz Ninja!</h1>
+        </header>
+        <div id="question"></div>
+        <div id="response"></div>
+        <!--<form id='response'>
+          <input name='answer' type= 'text'>
+          <button type= 'submit'>Submit Answer</button>
+        </form> -->
+        <div id="result"></div>
+        <div id="info"></div>
+        <button id="start">Click to Start</button>
+      </div>
+      <div id="ajax">
+        <h1>Ajax Example</h1>
+        <button id="number">Number Fact</button>
+        <button id="chuck">Chuck Norris Fact</button>
+        <div id="output">Ajax response will appear here</div>
+      </div>
+    </section>
+    <div id="todo"></div>
+    <h1>To Do List</h1>
+    <form
+      id="todo"
+      action="https://jsonplaceholder.typicode.com/todos"
+      method="POST"
+    >
+      <input
+        type="text"
+        name="task"
+        placeholder="Add Task"
+        autofocus
+        required
+      />
+      <button type="submit">Add Task</button>
+    </form>
+
+    <script>
+      "use strict";
+      const url =
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/questions.json';
+      fetch(url)
+        .then((res) => res.json())
+        .then((quiz) => {
+          view.start.addEventListener(
+            "click",
+            () => game.start(quiz.questions),
+            false
+          );
+          view.response.addEventListener(
+            "click",
+            (event) => game.check(event),
+            false
+          );
+        });
+
+      // quiz ninja's script.
+      function random(a, b = 1) {
+        // if only 1 argument is provided, we need to swap the values of a and b
+        if (b === 1) {
+          [a, b] = [b, a];
+        }
+        return Math.floor((b - a + 1) * Math.random()) + a;
+      }
+      function shuffle(array) {
+        for (let i = array.length; i; i--) {
+          let j = random(i) - 1;
+          [array[i - 1], array[j]] = [array[j], array[i - 1]];
+        }
+      }
+      //const quiz = [
+        //{ name: "Superman", realName: "Clark Kent" },
+        //{ name: "Wonder Woman", realName: "Diana Prince" },
+        //{ name: "Batman", realName: "Bruce Wayne" },
+        //{ name: "The Hulk", realName: "Bruce Banner" },
+        //{ name: "Spider-man", realName: "Peter Parker" },
+        //{ name: "Cyclops", realName: "Scott Summers" },
+      //];
+      const view = {
+        start: document.getElementById("start"),
+        score: document.querySelector("#score strong"),
+        question: document.getElementById("question"),
+        result: document.getElementById("result"),
+        response: document.querySelector("#response"),
+        info: document.getElementById("info"),
+        render(target, content, attributes) {
+          // render updates elements takes element to dispay,content, object of html attributes)
+          for (const key in attributes) {
+            target.setAttribute(key, attributes[key]);
+          }
+          target.innerHTML = content;
+        },
+        show(element) {
+          element.style.display = "block";
+        },
+        hide(element) {
+          element.style.display = "none";
+        },
+        buttons(array) {
+          return array.map((value) => `<button>${value}</button>`).join("");
+        },
+        teardown() {
+          this.hide(this.question);
+          this.hide(this.response);
+          this.show(this.start);
+        },
+      };
+      const game = {
+        start(quiz) {
+          console.log("start() invoked");
+          this.score = 0;
+          this.questions = [...quiz]; //what does ... do?  I think it passes all of the array?
+          //view.setup();
+          this.ask();
+        },
+        ask(name) {
+          console.log("ask() invoked");
+          if (this.questions.length > 2) {
+            shuffle(this.questions);
+
+            // if(this.questions.length >0){
+            this.question = this.questions.pop();
+            const options = [
+              this.questions[0].realName,
+              this.questions[1].realName,
+              this.question.realName,
+            ];
+            shuffle(options);
+            const question = `What is ${this.question.name}'s' real name? `;
+            view.render(view.question, question);
+            view.render(view.response, view.buttons(options));
+          } else {
+            this.gameOver();
+          }
+        },
+        check(event) {
+          console.log("check(event) invoked");
+          const response = event.target.textContent;
+          const answer = this.question.realName;
+          //event.preventDefault();
+          //const response = view.response.answer.value;
+          //const answer = this.question.realName;
+          if (response === answer) {
+            view.render(view.result, "Correct!", { class: "correct" });
+            this.score++;
+            view.render(view.score, this.score);
+          } else {
+            view.render(
+              view.result,
+              `Wrong! The correct answer was ${answer}`,
+              { class: "wrong" }
+            );
+          }
+          this.ask();
+        },
+        gameOver() {
+          console.log("gameOver() invoked");
+          view.render(
+            view.info,
+            `Game Over, you scored ${this.score} point${
+              this.score !== 1 ? "s" : ""
+            }`
+          );
+          view.teardown();
+        },
+      };
+
+      //view.start.addEventListener("click", () => game.start(quiz), false);
+
+      view.response.addEventListener(
+        "click",
+        (event) => game.check(event),
+        false
+      );
+      // view.hide(view.response);
+      //game.start(quiz);
+    </script>
+    <script>
+      const textButton = document.getElementById("number");
+      const apiButton = document.getElementById("chuck");
+      const outputDiv = document.getElementById("output");
+      const textURL = "http://numbersapi.com/random";
+      const apiURL = "https://api.chucknorris.io/jokes/random";
+
+      textButton.addEventListener(
+        "click",
+        () => {
+          fetch(textURL)
+            .then((response) => {
+              outputDiv.innterHTML = "Waiting for response...";
+              if (response.ok) {
+                return response;
+              }
+              throw Error(response.statusText);
+            })
+            .then((response) => response.text())
+            .then((text) => (outputDiv.innerText = text))
+            .catch((error) => console.log("There was an error: ", error));
+        },
+        false
+      );
+      apiButton.addEventListener(
+        "click",
+        () => {
+          fetch(apiURL)
+            .then((response) => {
+              outputDiv.innerHTML = "Waiting for response...";
+              if (response.ok) {
+                return response;
+              }
+              throw Error(response.statusText);
+            })
+            .then((response) => response.json())
+            .then((data) => (outputDiv.innerText = data.value))
+            .catch((error) => console.log("There was an error:", error));
+        },
+        false
+      );
+    </script>
+    <script>
+      const form = document.forms["todo"];
+
+      form.addEventListener("submit", addTask, false);
+
+      function addTask(event) {
+        event.preventDefault();
+        const task = new FormData(form);
+        const url = `http://echo.jsontest.com/id/1/title/${form.task.value}`;
+        const headers = new Headers({
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        });
+        const request = new Request(url, {
+          method: "POST",
+          mode: "cors",
+          header: headers,
+          body: JSON.stringify(task),
+        });
+
+        fetch(request)
+          .then((response) => response.json())
+          .then((data) =>
+            console.log(`${data.title} saved with an id of ${data.id}`)
+          )
+          .catch((error) => console.log("There was an error:", error));
+      }
+    </script>
+  </body>
+</html>
+
+<!-- Why is this not providing the correct answer as an option?  -->

@@ -33,6 +33,10 @@ const links =[
         label: "To-Do List Challenge",
         url: "../Portfolio/ToDoChallenge/index.html"
     },
+    {
+        label: "Week 7 Notes",
+        url: "../Portfolio/Week7/Week 7 notes.html"
+    },
 ]
 let list = document.getElementById("TableOfContents")
 function loadList(){

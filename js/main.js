@@ -35,7 +35,8 @@ const links =[
     },
     {
         label: "Week 7 Notes",
-        url: "../Portfolio/Week7/Week 7 notes.html"
+        url: "../Portfolio/Week7/Week 7 notes.html" 
+        
     },
 ]
 let list = document.getElementById("TableOfContents")

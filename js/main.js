@@ -40,7 +40,7 @@ const links =[
     },
     {
         label: "Week 8 Notes",
-        url: "../Portfolio/Week7/Week 8 notes.html" 
+        url: "../Portfolio/Week8/Week 8 notes.html" 
         
     },
 ]

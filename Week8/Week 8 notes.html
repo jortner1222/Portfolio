@@ -1,0 +1,363 @@
+<!--Transforms and transitions 
+transform: translateX moves horizontally
+translatey moves verticially.  doesn't work on inline...use inline block. 
+scale(x,y) scales horizontally than vertically.  if you omit a value it uses the same for both. 
+if you use more than 1 transform it overides the 1st.  rotate() rotates...postive= clockwise, negative= counter clockwise
+skew(x,y)- writes text on a diagonal.
+
+transition: gets place in regular not the hover.  first value is start, second is how it moves, third is when returns back. 
+See code for example on how to control animation.  Good resource on how- https://www.youtube.com/watch?v=YszONjKpgg4&ab_channel=WebDevSimplified 
+Question--what animation location is 100% it seems dependant on little square size? TransformX and Y go from top left corner. 
+
+fillRect(startX, startY, width, height)
+svg source:  https://www.youtube.com/watch?v=9Y4P3FvZ5bg&ab_channel=KevinPowell
+
+in svg...circles cy cx are from center.   rectangles do x, y from top left. rx and ry rounds corners. 
+viewport= what part of the screen you see aka window size. objects can be anywhere...just depends if you can see or not.  
+viewbox= what shows up inside...aka zoom and pan.  Its where viewport starts.  
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Week 8 Notes</title>
+    <style>
+      h1 {
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
+      }
+      h2 {
+        text-align: center;
+      }
+
+      h2 span {
+        font-size: 30px;
+        color: orchid;
+        display: inline-block;
+        transition: 0.25s ease-in-out;
+      }
+      h2:hover span {
+        color: #d60e0e;
+        transform: rotate(10deg) translateX(80px) scale(2);
+      }
+      ul {
+        position: relative;
+        top: 100px;
+        left: 150px;
+        bottom: 100px;
+        float: center;
+        width: 400px;
+        height: 600px;
+        margin: 10px;
+        padding: 10px;
+      }
+      li {
+        position: absolute;
+        top: 150px;
+        left: 150px;
+        height: 200px;
+        width: 100px;
+        border: 3px solid black;
+        background-color: lightslategray;
+        border-radius: 50%;
+        list-style-type: none;
+        transform-origin: 10% 10%;
+        opacity: 0.5;
+        transition: ease-in, 2s;
+        padding: 10px;
+      }
+      li:hover {
+        opacity: 1;
+      }
+      ul:first-of-type li {
+        transform-origin: center;
+      }
+      ul:last-of-type li {
+        transform-origin: top center;
+      }
+      li:nth-of-type(1) {
+        transform: rotate(45deg);
+        border-color: #d60e0e;
+        background-color: lightcoral;
+      }
+      li:nth-of-type(2) {
+        transform: rotate(90deg);
+        border-color: #e49f0c;
+        background-color: lightsalmon;
+      }
+      li:nth-of-type(3) {
+        transform: rotate(135deg);
+        border-color: yellow;
+        background-color: lightyellow;
+      }
+      li:nth-of-type(4) {
+        transform: rotate(180deg);
+        border-color: green;
+        background-color: lightgreen;
+      }
+      li:nth-of-type(5) {
+        transform: rotate(225deg);
+        border-color: blue;
+        background-color: lightblue;
+      }
+      li:nth-of-type(6) {
+        transform: rotate(270deg);
+        border-color: indigo;
+        background-color: lavender;
+      }
+      li:nth-of-type(7) {
+        transform: rotate(315deg);
+        border-color: violet;
+        background-color: lavenderblush;
+      }
+      .child {
+        animation: left-to-right forwards ease-in alternate 4s infinite;
+      }
+      .parent:hover .child {
+        animation-play-state: paused;
+      }
+      @keyframes left-to-right {
+        0% {
+          transform: translateX(0px) translateY(0px);
+        }
+        33% {
+          transform: translateX(133px) translateY(370px);
+          background-color: hotpink;
+        }
+        66% {
+          transform: translateX(266px) translateY(0px);
+        }
+        100% {
+          transform: translateX(370px) translateY(370px);
+          background-color: yellow;
+        }
+      }
+      .parent {
+        background-color: black;
+        display: block;
+        height: 400px;
+        width: 400px;
+      }
+      .child {
+        background-color: rebeccapurple;
+        height: 30px;
+        width: 30px;
+        opacity: S 1;
+      }
+      div {
+        /*position: absolute;*/
+        display: inline-block;
+      }
+      p {
+        text-align: center;
+      }
+      .myCanvas {
+        display: inline-block;
+        border: solid 2px black;
+      }
+      span {
+        float: center;
+      }
+      #message{
+        display: block;
+        text-align: center;
+        font-size: xx-large;
+        color: red; 
+        padding-bottom: 30px; 
+      }
+    </style>
+  </head>
+  <body>
+    <span>
+      <h1>Transitions and Transformation</h1>
+      <h2>
+        Put <br />
+        your <br />
+        <span>dukes </span> <br />
+        up, sir!
+      </h2>
+    </span>
+    <span>
+      <h1>rotate an oval</h1>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </span>
+
+    <span>
+      <h1>Animated square</h1>
+      <p>Don't touch me!</p>
+      <div class="parent">
+        <div class="child"></div>
+      </div>
+    </span>
+    <span>
+      <h1>Canvas</h1>
+      <canvas id="myCanvas" class="myCanvas">
+        Sorry! Your browser doesn't support Canvas.
+      </canvas>
+    </span>
+    <span>
+      <h1>Confetti</h1>
+      <canvas id="myCanvas2" class="myCanvas">
+        Sorry! Your browser doesn't support Canvas.
+      </canvas>
+    </span>
+    <span>
+      <h1>SVG</h1>
+      <svg width="500" height="300">
+        <rect rx="15" ry="15" x="25" y="25" height="200" width="200" fill= "lightblue"></rect>
+        <circle r="120" cx="125" cy="125" fill="none" stroke= "red" stroke-width="10px"/>
+        <circle r="70" cx="125" cy="125" fill="none" stroke= "red" stroke-width="10px"/>
+        <line x1="300" y1="200" x2="450" y2="200" stroke="green" stroke-width="25"/>
+        <line x1="300" y1="50" x2="450" y2="50" stroke="green" stroke-width="25"/>
+        <polygon fill="pink" points= "300,50 375,125 450,50 450,200 375,125 300,200" />
+      </svg>
+    </span>
+    <span>
+      <h1> Feed me a cookie?</h1>
+      <img src= "boy.svg" alt="boy" id="boy" height="500" draggable="false">
+      <img src= "cookie.svg"alt= "cookie" id="cookie" height="200" draggable="true">
+      <div id= "message"></div>
+    </span>
+    <script>
+      let cookie= document.getElementById("cookie"); 
+      cookie.addEventListener('dragstart', function(event){});
+      let boy= document.getElementById("boy");
+      boy.addEventListener("dragover", function(event){
+        event.preventDefault(); 
+      });
+      boy.addEventListener("drop",function(event){
+        let message= document.getElementById("message");
+        message.innerHTML += "YUM! "
+        event.preventDefault(); 
+      });
+    </script>
+    <script>
+      var canvas1 = document.getElementById("myCanvas");
+      var context = canvas1.getContext("2d");
+
+      var canvas2 = document.getElementById("myCanvas2");
+      var c = canvas2.getContext("2d");
+      var width = 800;
+      var height = 800;
+      canvas1.width = width;
+      canvas1.height = height;
+      canvas2.width = width;
+      canvas2.height = height;
+      context.strokeStyle = "red";
+      context.fillStyle = "blue";
+      //draws rectangle
+      context.fillRect(30, 30, 200, 100);
+      context.strokeRect(30, 30, 200, 100);
+      //draw line
+      context.beginPath();
+      context.moveTo(50, 300);
+      context.lineTo(100, 500);
+      context.lineTo(150, 300);
+      context.lineTo(200, 500);
+      context.lineTo(250, 300);
+      context.lineTo(300, 500);
+      context.lineTo(350, 300);
+      context.lineTo(400, 500);
+      context.lineTo(450, 300);
+      context.lineTo(500, 500);
+      context.stroke();
+
+      //arcs
+      context.beginPath();
+      context.strokeStyle = "green";
+      context.arc(300, width, 250, 0, Math.PI * 2, false);
+      context.stroke();
+
+      //lots of circles
+      var circles = [];
+
+      function Circle() {
+        this.radius = 20;
+        this.x = Math.random() * (width - this.radius * 2) + this.radius;
+        this.y = Math.random() * (height - this.radius * 2) + this.radius + 1;
+        this.dx = Math.round(Math.random() * 5) + 1;
+        this.dy = Math.round(Math.random() * 5) + 1;
+
+        this.color = getColor();
+      }
+      makeCircles();
+      function getColor() {
+        let r = Math.round(Math.random() * 250);
+        let g = Math.round(Math.random() * 250);
+        let b = Math.round(Math.random() * 250);
+        let a = Math.random().toFixed(1);
+        let color = "rgba(" + r + "," + g + "," + b + "," + a + ")";
+        return color;
+      }
+
+      function makeCircles() {
+        for (var i = 0; i < 500; i++) {
+          let circle = new Circle();
+          circles.push(circle);
+          if (i % 4 == 0) {
+            circle.dx *= -1;
+            circle.dy *= -1;
+          }
+          if (i % 4 == 1) {
+            circle.dy *= -1;
+          }
+          if (i % 4 == 2) {
+            circle.dx *= -1;
+          }
+        }
+      }
+      function drawCircles() {
+        for (var i = 0; i < circles.length; i++) {
+          c.beginPath();
+          c.strokeStyle = circles[i].color;
+          c.fillStyle = circles[i].color;
+          c.arc(
+            circles[i].x,
+            circles[i].y,
+            circles[i].radius,
+            0,
+            Math.PI * 2,
+            false
+          );
+          c.stroke();
+          c.fill();
+
+          circles[i].x += circles[i].dx;
+          circles[i].y += circles[i].dy;
+
+          if (
+            circles[i].x + circles[i].radius > width ||
+            circles[i].x - circles[i].radius < 0
+          ) {
+            circles[i].dx = -circles[i].dx;
+          }
+
+          if (
+            circles[i].y + circles[i].radius > height ||
+            circles[i].y - circles[i].radius < 0
+          ) {
+            circles[i].dy = -circles[i].dy;
+          }
+        }
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        c.clearRect(0, 0, width, height);
+        drawCircles();
+      }
+      animate();
+    </script>
+  </body>
+</html>

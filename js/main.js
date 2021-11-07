@@ -38,6 +38,11 @@ const links =[
         url: "../Portfolio/Week7/Week 7 notes.html" 
         
     },
+    {
+        label: "Week 8 Notes",
+        url: "../Portfolio/Week7/Week 8 notes.html" 
+        
+    },
 ]
 let list = document.getElementById("TableOfContents")
 function loadList(){

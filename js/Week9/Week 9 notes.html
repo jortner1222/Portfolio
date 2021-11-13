@@ -1,0 +1,153 @@
+<!--
+    The Window Object
+Browser Object Model-  all browser windows, tab, popups, frames, and iframes have a
+    window object.  aka const global= this;  parseInt(), isNaN() are from window. Also
+    alert(), confirm(), and prompt().  
+Findng out browser informatiion- can use window.navigator.userAgent to tell what browser
+    except its outdated and often wrong/misleading. windows.location.href returns full URL. 
+    also has reload(), assign(), replace(), window.location.toString() returns sting with whole URL. 
+Browser history-  window.history shows previous pages.  window.history.length shows how many.  window.history.go(x) will send you to page x
+    also window.history.forward() and window.history.back(); 
+Controlling windows-  can open a window with window.open(url, title, attributeList)...aka a popup. 
+example:  const popup = window.open('https://sitepoint.com','
+SitePoint','width=400,height=400,resizable=yes');  
+    Can also close it with .close(), and move it with window.moveTo(x,y), resize with resizeTo(600,400)
+generally speaking...don't use the above.  window.screen.height is height, window.screen.width is witdth.  also
+can use .availHeight and .availWidth. 
+    Cookies- small files saved to computer.  Mostly replaced now by localStorage. Cookies are a txt file with a list of name/value pairs separted
+        by a semicolon.  To see the cookie jar refer to document.cookie: 
+        EX:  document.cookie = 'name=Superman';
+            document.cookie = 'hero=true';
+            document.cookie = 'name=Batman'
+
+            const cookies = document.cookie.split("; ");
+        for (crumb of cookies){
+            const [key,value] = crumb.split("=");
+            console.log(`The value of ${key} is ${value}`);
+        }
+Cookies expire at session end by default.  can add a expire date like \
+        const expiryDate = new Date(); 
+        const tomorrow = expiryDate.getTime() + 1000 * 60 * 60 * 24;
+        expiryDate.setTime(tomorrow);
+
+        document.cookie = `name=Batman; expires=${ expiryDate.toUTCString()}`;
+    Most use Cookies.js or jsCookie instead of native cookies. 
+Timing functions
+        .setTimeout( callback to function, number of milliseconds)
+        can also .clearTimeout(int) but you have to be fast. 
+        .setInterval works just like timeout but repeats. can be cleared with .clearInterval(variable)
+        ex: const summon = window.setInterval(chant,1000);
+            window.clearInterval(summon);
+HTML5 API's
+
+data- attribute
+        embeds data into web page ussng attributes that are ignored by the broswer.  Uswed as a hook that the program
+        can use to acces information about an element on the page.  
+        must start with data-, use only lowercase, numbers,hypens,dots, colons,udnerscores, optional strng value.  can be accessed wtih
+        dataset.  ex: 
+        <div id='hero' data-powers='flight superSpeed'>
+            Superman
+        </div>
+        const superman = document.getElementById('hero');
+        const powers = superman.dataset.powers;
+
+LocalStorage, geolocation, web workers, multimedia- see old notes on localStorage.  
+        geolocation gives location.  ex: that passes it to a youAreHere() function. 
+        navigator.geolocation.getCurrentPosition(youAreHere);
+        function youAreHere(position) {
+            console.log(`Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`); 
+        }
+        webworkers-  javascript can only do 1 thing at a tme.  web workers allow for background tasks.  Doesn't work in Chrome. 
+        const worker = new Worker('task.js');
+        worker.postMessage('Hello');
+        self.postMessage('Finished'); //message from worker
+        worker.addEventListener('message', (event) => {
+            console.log(event.data);
+        }, false);
+        worker.terminate();
+
+        why is the example on websockets in the textbook broken? Is the echo page
+        now obsolete? I"m having a hard time finding sources on it that aren't 10+ years old. 
+
+Notifications example: 
+if(window.Notification) {
+    Notification.requestPermission();
+}
+if(window.Notification) {
+    Notification.requestPermission()
+    .then((permission) => {
+        if(Notification.permission === 'granted') {
+        new Notification('Hello JavaScript!');
+        }
+    });
+}
+const notification = new Notification('JavaScript: Novice to Ninja',{
+    body: 'The new book from SitePoint',
+    icon: 'sitepointlogo.png'
+});
+notification.close();
+notification.addEventListener('click', () => {
+window.open('https://sitepoint.com')
+}, false);
+
+Now has audio and video tags to add audio and video instead of flash.  
+shims and polyfills-  work arounds for features your browswer doesn't have yet.  
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Factorizor</title>
+  </head>
+  <body>
+    <button id="rainbow">Change Color</button>
+    <form>
+      <label for="number">Enter a Number to Factorize:</label>
+      <input id="number" type="number" name="number" min="1" value="20" />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="output"></div>
+    <script>
+      const btn = document.getElementById("rainbow");
+
+      const rainbow = [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "rebeccapurple",
+        "violet",
+      ];
+
+      function change() {
+        document.body.style.background = rainbow[Math.floor(7 * Math.random())];
+      }
+      btn.addEventListener("click", change);
+      const form = document.forms[0];
+      form.addEventListener("submit", factorize, false);
+
+      function factorize(event) {
+        // prevent the form from being submitted
+        event.preventDefault();
+        document.getElementById("output").innerHTML =
+          "<p>This could take a while ...</p>";
+        const number = Number(form.number.value);
+
+        if (window.Worker) {
+          const worker = new Worker("factors.js");
+          worker.postMessage(number);
+          worker.addEventListener(
+            "message",
+            (event) => {
+              document.getElementById("output").innerHTML = event.data;
+            },
+            false
+          );
+        }
+      }
+    </script>
+   
+   
+  </body>
+</html>

@@ -53,6 +53,12 @@ const links =[
         url: "../Portfolio/Week10/Week 10 notes.html" 
         
     },
+    {
+        label: "Block 2 Project",
+        url: "../Portfolio/Block2Project/index.html" 
+        
+    },
+
 ]
 let list = document.getElementById("TableOfContents")
 function loadList(){

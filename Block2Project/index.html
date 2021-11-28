@@ -5,9 +5,101 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Wizard Always Wins</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+    <link rel= "stylesheet" href="style.css">
 </head>
 <body>
+   <h1>The Wizard Always Wins</h1>
+    <!-- <div>
+        <input type="radio" name= "playerNumber" value= 2>2 Players</input>
+        <input type="radio" name= "playerNumber" value= 3>3 Players</input>
+        <input type="radio" name= "playerNumber" value= 4 checked="checked">4 Players</input>
+        <input type="radio" name= "playerNumber" value= 5>5 Players</input>
+    </div> -->
+    <div id="gameBoard">
+    <!-- <div id= "turn"> -->
+        <p id= "spot1" class= "spot">1</p>
+        <p id= "spot2" class= "spot">2</p>
+        <p id= "spot3" class= "spot">3</p>
+        <p id= "spot4" class= "spot">4</p>
+        <p id= "spot5" class= "spot">5</p>
+        <p id= "spot6" class= "spot">6</p>
+        <p id= "spot7" class= "spot">7</p>
+    <!-- </div> -->
+    <!-- <div id= roles> -->
+        <div class="role" id= "queen">
+            <h2>Queen</h2>
+            <!-- <img src= "images/queen.svg"> -->
+            <!-- <p>Draw 1, Play 1</p> -->
+        </div>
+        <div class="role"  id= "oracle">
+            <h2>Oracle</h2>
+            <!-- <img src= "images/oracle.svg"> -->
+            <!-- <p>Look at top 3 cards and pick 1</p> -->
+        </div>
+        <div class="role" id= "trader">
+            <h2>Trader</h2>
+            <!-- <img src= "images/trader.svg"> -->
+            <!-- <p>Draw 1, Play 1, Trade 1</p> -->
+        </div>
+        <div class="role" id= "apprentice">
+            <h2>Apprentice</h2>
+            <!-- <img src= "images/apprentice.svg"> -->
+            <!-- <p>Draw Tokens equal to your level</p> -->
+        </div>
+        <div class="role" id= "farmer">
+            <h2>Farmer</h2>
+            <!-- <img src= "images/farmer.svg"> -->
+            <!-- <p>Draw 2, Draw 1 Token,  Play 1</p> -->
+        </div>
+        <div class="role" id= "hunter">
+            <h2>Hunter</h2>
+            <!-- <img src= "images/hunter.svg"> -->
+            <!-- <p>Draw 1, Draw 1 Token, Play 2</p> -->
+        </div>
+        <div class="role" id= "wizard">
+            <h2>Wizard</h2>
+            <!-- <img src= "images/wizard.svg"> -->
+            <!-- <p>Draw your gem to win</p> -->
+        </div>
+    <!-- </div> -->
+    <div id = "rules">
+        <table>
+            <caption>Element Sets</caption>
+            <tr>
+                <td> 4 Plants</td>
+                <td>Level Up</td>
+            </tr>
+            <tr>
+                <td>5 Snails</td>
+                <td>Add A Gem</td>
+            </tr>
+            <tr>
+                <td>6 Bones</td>
+                <td>Level Up Twice</td>
+            </tr>
+            <tr>
+                <td> 7 Mushrooms</td>
+                <td> Level Up and Add a Gem</td>
+            </tr>
+            <tr>
+                <td>8 Potions</td>
+                <td>Add 2 Gems</td>
+            </tr>
+
+        </table>
+
+    </div>
+    <div id= "drawButtons">
+        <button class= "button" id= "token">Draw a Token</button>
+        <button class ="button" id= "card">Draw a Card</button>
+        <button id= "add">Add Token</button>
+    </div>
+    <div id= "playerArea">
+
+    </div>
+</div>
+
     <script type='module'  src="js/main.js"></script>
-    
 </body>
 </html>

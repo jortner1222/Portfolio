@@ -20,9 +20,8 @@ function getPlayers(){
 
     let player1 = new Player("red");
     let player2 = new Player("green");
-    let player3 = new Player("pink");
-    let player4 = new Player("blue");
+  
 
-    players.push(player1,player2,player3,player4);
+    players.push(player1,player2);
     return players;
 }

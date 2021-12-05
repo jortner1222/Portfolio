@@ -23,6 +23,22 @@ export default class Pieces {
     }
     return array;
   }
+  addToHand(card){
+    hand.push(card); 
+}
+
+discardCard(card){
+    let index= hand.indexOf(card.name);
+    hand.splice(index,1); 
+}
+
+giveFromHand(card){
+    let copy= card; 
+    let index= hand.indexOf(card.name);
+    hand.splice(index,1);
+    return copy; 
+
+}
 
   createDeck() {
     var deck = [];

@@ -3,7 +3,7 @@ import Player from "./player.js";
 
 export default class Game{
     constructor(){
-        this.players = getPlayers();
+        this.players = this.getPlayers();
         this.pieces = new Pieces(); 
         console.log(this.players);
     }
@@ -14,8 +14,8 @@ dealCards(){
     });
     
 }
-};
-function getPlayers(){
+ getPlayers(){
+    
     let players= []; 
 
     let player1 = new Player("red");
@@ -25,3 +25,26 @@ function getPlayers(){
     players.push(player1,player2);
     return players;
 }
+
+ renderHand(parent, hand) {
+     parent.innerHTML= " ";
+    hand.forEach(card => {
+      parent.appendChild(this.renderCard(card));
+    });
+  
+  }
+
+renderCard(card){
+  const item= document.createElement("div");
+  item.id= card.name;
+//   item.setAttribute('draggable', true); 
+  item.innerHTML= card.value+" "+ card.suit; 
+
+  let discardButton= document.createElement('button');
+    discardButton.innerHTML= "discard";
+   // discardButton.addEventListener('click', card.discardCard(card)); 
+    item.appendChild(discardButton); 
+  return item; 
+  }
+
+};

@@ -81,6 +81,18 @@ function setUpButtons() {
       renderPlayedHand(document.getElementById("playedCards"), currentPlayer.getPlayedHand());
     };
   }
+  let discardPlayButtons = document.querySelectorAll(".playDiscard");
+
+
+  for (let i = 0; i < discardPlayButtons.length; i++) {
+    discardPlayButtons[i].onclick= function () {
+      console.log("click worked.");
+      console.log(hand[i]);
+      discardCard(currentPlayer.getPlayedHand()[i], currentPlayer.getPlayedHand());
+      renderHand(document.getElementById("playerArea"), hand);
+      renderPlayedHand(document.getElementById("playedCards"), currentPlayer.getPlayedHand());
+    };
+  }
 }
 
 

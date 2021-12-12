@@ -6,12 +6,14 @@ export default class Pieces {
     this.drawBag = this.createDrawBag();
   }
 
-  draw(deck, number) {
-    let cards = [];
-    for (let i = 0; i <= number; i++) {
-      cards.push(deck.shift());
-    }
-    return cards;
+  
+ 
+  getDeck(){
+    return this.deck; 
+  }
+
+  getDrawBag(){
+    return this.drawBag; 
   }
 
   shuffle(array) {
@@ -23,41 +25,26 @@ export default class Pieces {
     }
     return array;
   }
-  addToHand(card){
-    hand.push(card); 
-}
 
-discardCard(card){
-    let index= hand.indexOf(card.name);
-    hand.splice(index,1); 
-}
 
-giveFromHand(card){
-    let copy= card; 
-    let index= hand.indexOf(card.name);
-    hand.splice(index,1);
-    return copy; 
-
-}
-
-  createDeck() {
-    var deck = [];
-    let suit = [" plants", " snails", " potions", " bones", " mushrooms"];
-    let value = ["2", "3"];
-    for (let i = 0; i < 9; i++) {
-      suit.forEach((item) => {
-        deck.push(new Card(value[0], item));
-      });
-    }
-    for (let i = 0; i < 3; i++) {
-      suit.forEach((item) => {
-        deck.push(new Card(value[1], item));
-      });
-    }
-    deck = this.shuffle(deck);
-    console.log(deck);
-    return deck;
+createDeck() {
+  var deck = [];
+  let suit = [" plants", " snails", " potions", " bones", " mushrooms"];
+  let value = ["2", "3"];
+  for (let i = 0; i < 9; i++) {
+    suit.forEach((item) => {
+      deck.push(new Card(value[0], item));
+    });
   }
+  for (let i = 0; i < 3; i++) {
+    suit.forEach((item) => {
+      deck.push(new Card(value[1], item));
+    });
+  }
+  deck = this.shuffle(deck);
+  console.log(deck);
+  return deck;
+}
 
   createDrawBag() {
     var drawBag = [];
@@ -82,6 +69,9 @@ giveFromHand(card){
     }
     drawBag = this.shuffle(drawBag);
     console.log(drawBag);
+    return drawBag; 
   }
+
  
 }
+

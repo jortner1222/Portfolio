@@ -1,19 +1,21 @@
 import Pieces from "./Pieces.js";
 import Player from "./player.js";
+import { draw, drawMany, discardCard, giveFromHand } from "./helpers.js";
 
 export default class Game{
     constructor(){
         this.players = this.getPlayers();
         this.pieces = new Pieces(); 
-        console.log(this.players);
+        
     }
 dealCards(){
     this.players.forEach(player => {
-    player.hand = this.pieces.draw(this.pieces.deck,3); 
+    player.hand = drawMany(this.pieces.deck,3); 
     console.log(player.hand);
     });
     
 }
+
  getPlayers(){
     
     let players= []; 
@@ -25,26 +27,25 @@ dealCards(){
     players.push(player1,player2);
     return players;
 }
+getCurrentPlayer()
+     {  
+         var player;
+         if(document.getElementById("player1").checked)
+         {player= this.players[0];
+        console.log("was true") ;
+      }
+         else {
+             player=this.players[1];
+             console.log("was false");
+         }
+         console.log("Player is " + player.color); 
+         return player;
+     }
 
- renderHand(parent, hand) {
-     parent.innerHTML= " ";
-    hand.forEach(card => {
-      parent.appendChild(this.renderCard(card));
-    });
-  
-  }
 
-renderCard(card){
-  const item= document.createElement("div");
-  item.id= card.name;
-//   item.setAttribute('draggable', true); 
-  item.innerHTML= card.value+" "+ card.suit; 
 
-  let discardButton= document.createElement('button');
-    discardButton.innerHTML= "discard";
-   // discardButton.addEventListener('click', card.discardCard(card)); 
-    item.appendChild(discardButton); 
-  return item; 
-  }
+
+
 
 };
+

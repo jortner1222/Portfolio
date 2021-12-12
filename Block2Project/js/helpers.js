@@ -5,7 +5,7 @@
 
 export function discardCard(card, hand) {
   console.log(card.name + "discarded");
-  let index = hand.indexOf(card.name);
+  let index = hand.indexOf(card);
   hand.splice(index, 1);
 }
 
@@ -40,5 +40,22 @@ export function renderCard(card) {
   discardButton.className = "discard";
   discardButton.innerHTML = "discard";
   item.appendChild(discardButton);
+  let playButton= document.createElement("button");
+  playButton.className="played";
+  playButton.innerHTML= "play";
+  item.appendChild(playButton);
   return item;
 }
+ export function renderPlayedCard(card){
+    const item = document.createElement("div");
+    item.id = card.name;
+    console.log ("render card name is "+ card.name);
+    //   item.setAttribute('draggable', true);
+    item.innerHTML = card.value + " " + card.suit;
+  
+    let discardButton = document.createElement("button");
+    discardButton.className = "playDiscard";
+    discardButton.innerHTML = "discard";
+    item.appendChild(discardButton);
+    return item;  
+ }

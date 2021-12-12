@@ -4,11 +4,16 @@ export default class Player{
 constructor(color){
     this.level= 0; 
     this.color= color;
-    this.hand= [];  
+    this.hand= [];
+    this.playedHand= [];  
   
 }
  getHand(){
-    return hand; 
+    return this.hand; 
+}
+getPlayedHand(){
+    return this.playedHand;
+    
 }
 
 addToHand(card){

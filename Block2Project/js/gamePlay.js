@@ -32,13 +32,13 @@ getCurrentPlayer()
          var player;
          if(document.getElementById("player1").checked)
          {player= this.players[0];
-        console.log("was true") ;
+        
       }
          else {
              player=this.players[1];
-             console.log("was false");
+             
          }
-         console.log("Player is " + player.color); 
+          
          return player;
      }
 

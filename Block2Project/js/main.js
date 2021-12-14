@@ -121,3 +121,38 @@ if (document.querySelector(".discard").hasAttribute(onclick)) {
     setUpButtons();
   }
 };
+
+const marker1= document.getElementById("player1Marker");
+const marker2= document.getElementById("player2Marker");
+
+marker1.addEventListener("dragstart", e => {
+    e.dataTransfer.setData("text/plain", marker1.id)
+});
+marker2.addEventListener("dragstart", e => {
+    e.dataTransfer.setData("text/plain", marker2.id)
+});
+
+for (const dropZone of document.querySelectorAll (".spot")){
+    dropZone.addEventListener("dragover", e => {
+        e.preventDefault(); 
+    });
+    dropZone.addEventListener("drop", e => {
+        e.preventDefault(); 
+        let droppedElementId= e.dataTransfer.getData("text/plain");
+        let element= document.getElementById(droppedElementId);
+        dropZone.appendChild(element);
+        
+    });
+}
+
+// export function drag(e){
+//     e.dataTransfer.setData("id", e.target.id);
+// }
+// export function allowDrop(e){
+//     e.preventDefault();
+// }
+// export function drop (e){
+//     e.preventDefault();
+//     let data = e.dataTransfer.getData("id");
+//     e.target.appendChild(document.getElementById(data));
+// }

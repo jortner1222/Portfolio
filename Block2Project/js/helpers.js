@@ -14,16 +14,7 @@ export function discardToken(token, hand) {
     let index = hand.indexOf(token);
     console.log ("discardToken found" +hand[index].name);
     hand.splice(index, 1);
-    if(hand.length>0)
-    for (let i =0; i< hand.length; i++)
-    {
-        console.log("token bag now has " + hand[i]);
-    }
-    
-    else{
-        console.log( "empty hand " + hand);
-
-    }
+   
     return hand; 
   }
 
@@ -39,6 +30,9 @@ export function draw(deck) {
   return card;
 }
 
+export function drawToken(bagId){
+
+}
 export function drawMany(deck, number) {
   let cards = [];
   for (let i = 0; i <= number; i++) {

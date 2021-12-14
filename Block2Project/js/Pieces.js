@@ -4,6 +4,8 @@ export default class Pieces {
   constructor() {
     this.deck = this.createDeck();
     this.drawBag = this.createDrawBag();
+    this.redGems= this.createGems("red");
+    this.greenGems=this.createGems("green")
   }
 
   
@@ -26,7 +28,20 @@ export default class Pieces {
     return array;
   }
 
-
+createGems(color){
+  let gems =[];
+  for (let i=0; i<8; i++)
+  {
+    gems.push(new Card(1, color));
+  }
+  return gems; 
+}
+getGems(color){
+  if(color=="red")
+  return this.redGems;
+  else
+  return this.greenGems; 
+}
 createDeck() {
   var deck = [];
   let suit = [" plants", " snails", " potions", " bones", " mushrooms"];
@@ -43,6 +58,7 @@ createDeck() {
   }
   deck = this.shuffle(deck);
   console.log(deck);
+  console.log ("Cards in Deck " +deck.length); 
   return deck;
 }
 
@@ -54,21 +70,32 @@ createDeck() {
       " potions",
       " bones",
       " mushrooms",
-      "addGem",
-      "LevelUp",
+      "Add A Gem",
+      "Level Up",
     ];
-    for (let i = 0; i < 8; i++) {
-      for (let x = 0; x < 5; x++) {
-        drawBag.push(new Card(1, suit[x]));
+    for( let i= 0; i<5; i++){
+      for(let x=0; x<5; x++){
+      drawBag.push(new Card(1,suit[i]))
       }
     }
-    for (let i = 5; i < suit.length; i++) {
-      for (let x = 0; x < 3; x++) {
+    for(let i=5; i<suit.length; i++){
+      for(let x=0; x<3; x++){
         drawBag.push(new Card(1, suit[i]));
       }
     }
+    // for (let i = 0; i < 8; i++) {
+    //   for (let x = 0; x < 5; x++) {
+    //     drawBag.push(new Card(1, suit[x]));
+    //   }
+    // }
+    // for (let i = 6; i < suit.length; i++) {
+    //   for (let x = 0; x < 3; x++) {
+    //     drawBag.push(new Card(1, suit[i]));
+    //   }
+    // }
     drawBag = this.shuffle(drawBag);
     console.log(drawBag);
+    console.log ("Gems in Bag " +drawBag.length); 
     return drawBag; 
   }
 

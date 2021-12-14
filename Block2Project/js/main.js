@@ -168,7 +168,7 @@ function renderLevel() {
   addLevel.appendChild(button);
 }
 function renderTokens(parent, tokens) {
-  parent.innerHTML = "My Tokens";
+  parent.innerHTML = "My Tokens"
   tokens.forEach((token) => {
     parent.appendChild(renderToken(token));
   });

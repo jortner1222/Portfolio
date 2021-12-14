@@ -3,10 +3,9 @@ body{
     display: inline;
     text-align: center;
     font-family: "Sofia";
-    background: url('images/stars.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size:100%;
+}
+html{
+    background: url('images/stars.svg') no-repeat center center fixed;
 }
 p{
     font-family: 'Patrick Hand', cursive;
@@ -41,15 +40,27 @@ td{
 #gameBoard {
     display:grid; 
     grid-template-columns: repeat(6,auto);
-    grid-template-rows: repeat(5,auto);
+    grid-template-rows: repeat(4,auto);
     gap: 5px;
     padding: 0px;
     margin: 0px; 
 }
 #playerArea{
+    
     background-color: aqua;
     grid-column-start: 1;
-    grid-column-end: 2; 
+    grid-column-end: 3; 
+}
+
+#playedCards{
+    background-color: aqua;
+    grid-column-start: 3;
+    grid-column-end: 5; 
+    
+}
+#myTokens{
+    background-color: aqua;
+    
 }
 h1{
     background-color: rgb(0, 0, 41);
@@ -122,12 +133,7 @@ button{
     grid-row-end: 3; 
     
 }
-/* #spot7{
-    grid-column-start: 7;
-    grid-column-end: 8; 
-    grid-row-start: 1;
-    grid-row-end: 2; 
-} */
+
 .marker{
     width: 100px;
     height: 100px;
@@ -180,14 +186,7 @@ button{
     grid-row-start: 1;
     grid-row-end: 2;  
 }
-/* #trader{
-    background: url('images/trader.svg')  plum;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size:50%;
-    color:white;
-    vertical-align: bottom;
-} */
+
 #apprentice{
     background: url('images/apprentice.svg')  plum;
     background-position: center;

@@ -2,9 +2,10 @@ import Game from "./gamePlay.js";
 import {
   draw,
   discardCard,
-  giveFromHand,
   renderCard,
   renderPlayedCard,
+  discardToken,
+  renderToken
 } from "./helpers.js";
 
 let game = new Game();
@@ -16,12 +17,18 @@ window.addEventListener("load", setUpGame);
 function setPlayer(player) {
   let playerArea = document.getElementById("playerArea");
   let playedArea = document.getElementById("playedCards");
+  let tokens= document.getElementById("myTokens");
+  let level= document.getElementById("myLevel");
   let currentPlayer = game.players[player];
   renderHand(playerArea, currentPlayer.hand);
   renderPlayedHand(playedArea, currentPlayer.playedHand);
+  renderTokens;
+  renderLevel();
   console.log(game.players[player].color);
   playerArea.style.backgroundColor = game.players[player].color;
   playedArea.style.backgroundColor = game.players[player].color;
+  tokens.style.backgroundColor = game.players[player].color;
+  level.style.backgroundColor = game.players[player].color;
 }
 
 function setUpGame() {
@@ -32,7 +39,8 @@ function setUpGame() {
 function setUpButtons() {
   let currentPlayer = game.getCurrentPlayer();
   let hand = currentPlayer.hand;
-
+  let tokenHand= currentPlayer.getTokenHand(); 
+//switch players
   document.getElementById("player1").onclick = function () {
     setPlayer(0);
   };
@@ -40,7 +48,7 @@ function setUpButtons() {
     setPlayer(1);
   };
 
- 
+ //play button
   let playButtons = document.querySelectorAll(".played");
   let playedHand = currentPlayer.getPlayedHand();
   console.log("play button length " + playButtons.length);
@@ -48,15 +56,15 @@ function setUpButtons() {
     playButtons[i].onclick = function () {
      let tempCard= hand[i];
       console.log("click worked.");
-      currentPlayer.getPlayedHand().push(tempCard);
+      playedHand.push(tempCard);
       discardCard(hand[i], hand);
       renderHand(document.getElementById("playerArea"), hand);
-  renderPlayedHand(document.getElementById("playedCards"), currentPlayer.getPlayedHand());
+      renderPlayedHand(document.getElementById("playedCards"), playedHand);
     
     };
   }
   
-
+//draw card
   document.getElementById("card").onclick = function () {
     let deck = game.pieces.deck;
     console.log("drew 1");
@@ -65,10 +73,10 @@ function setUpButtons() {
     console.log("new Card is " + newCard.value + newCard.suit);
     hand.push(newCard);
     renderHand(document.getElementById("playerArea"), hand);
-    renderPlayedHand(document.getElementById("playedCards"), currentPlayer.getPlayedHand());
-    //   checkButtons();
+    renderPlayedHand(document.getElementById("playedCards"), playedHand);
+     checkButtons();
   };
-
+//discard button
   let discardButtons = document.querySelectorAll(".discard");
 
   console.log(discardButtons);
@@ -76,25 +84,66 @@ function setUpButtons() {
     discardButtons[i].onclick= function () {
       console.log("click worked.");
       console.log(hand[i]);
-      discardCard(hand[i], hand);
+      hand= discardCard(hand[i], hand);
       renderHand(document.getElementById("playerArea"), hand);
-      renderPlayedHand(document.getElementById("playedCards"), currentPlayer.getPlayedHand());
+      renderPlayedHand(document.getElementById("playedCards"), playedHand);
     };
   }
+  // discard from played
   let discardPlayButtons = document.querySelectorAll(".playDiscard");
-
-
   for (let i = 0; i < discardPlayButtons.length; i++) {
     discardPlayButtons[i].onclick= function () {
       console.log("click worked.");
       console.log(hand[i]);
-      discardCard(currentPlayer.getPlayedHand()[i], currentPlayer.getPlayedHand());
+      playedHand= discardCard(playedHand[i], playedHand);
       renderHand(document.getElementById("playerArea"), hand);
-      renderPlayedHand(document.getElementById("playedCards"), currentPlayer.getPlayedHand());
+      renderPlayedHand(document.getElementById("playedCards"), playedHand);
+    };
+
+  }
+  //discard from Tokens
+  let discardTokens = document.querySelectorAll(".tokenDiscard");
+
+  console.log(discardTokens);
+  for (let i = 0; i < discardTokens.length; i++) {
+    discardTokens[i].onclick= function () {
+      console.log("token to discard " + tokenHand[i].name);
+      tokenHand=discardToken(tokenHand[i], tokenHand);
+      renderTokens(document.getElementById("myTokens"), tokenHand);
+      
     };
   }
-}
+//level up
+  let button= document.getElementById("levelUp");
+  button.onclick= function() {
+   renderLevel(); 
+  }
+//draw a token
+  document.getElementById("token").onclick = function () {
+    let tokens = game.pieces.drawBag;
+    let newToken = draw(tokens);
 
+    tokenHand.push(newToken);
+    renderTokens(document.getElementById("myTokens"),tokenHand);
+    
+  };
+}
+function renderLevel(){
+    let button= document.getElementById("levelUp");
+    let currentPlayer = game.getCurrentPlayer();
+    let addLevel= document.getElementById("myLevel");
+    let newLevel= currentPlayer.levelUp(); 
+    addLevel.innerHTML= "My Level: "+ newLevel;
+    addLevel.appendChild(button); 
+}
+function renderTokens(parent,tokens) {
+    parent.innerHTML= "My Tokens"
+    tokens.forEach((token) => {
+        parent.appendChild(renderToken(token));
+      });
+      
+      checkButtons();
+}
 
 function renderHand(parent, hand) {
   parent.innerHTML = "My Hand";
@@ -106,18 +155,21 @@ function renderHand(parent, hand) {
 
 function renderPlayedHand(parent, hand) {
   parent.innerHTML = "My Played Cards";
-  console.log("played hand length " + hand.length);
   hand.forEach((card) => {
     parent.appendChild(renderPlayedCard(card));
   });
   checkButtons();
 }
-// document.getElementById("token").onclick=
 
 function checkButtons(){
-if (document.querySelector(".discard").hasAttribute(onclick)) {
+if (document.querySelector(".discard")!= null && document.querySelector(".discard").hasAttribute(onclick) ||
+document.querySelector(".playDiscard")!= null && document.querySelector(".playDiscard").hasAttribute(onclick) ||
+document.querySelector(".tokenDiscard")!= null && document.querySelector(".tokenDiscard").hasAttribute(onclick)
+ ) {
     return;
-  } else {
+  } else if(document.querySelector(".discard")== null && document.querySelector(".playDiscard")== null && document.querySelector(".tokenDiscard")== null  ) {
+  return; }
+  else {
     setUpButtons();
   }
 };
@@ -145,14 +197,3 @@ for (const dropZone of document.querySelectorAll (".spot")){
     });
 }
 
-// export function drag(e){
-//     e.dataTransfer.setData("id", e.target.id);
-// }
-// export function allowDrop(e){
-//     e.preventDefault();
-// }
-// export function drop (e){
-//     e.preventDefault();
-//     let data = e.dataTransfer.getData("id");
-//     e.target.appendChild(document.getElementById(data));
-// }

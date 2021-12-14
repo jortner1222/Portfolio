@@ -4,10 +4,28 @@
 //import { setUpDiscardButtons } from "./main";
 
 export function discardCard(card, hand) {
-  console.log(card.name + "discarded");
+  
   let index = hand.indexOf(card);
   hand.splice(index, 1);
+  return hand;
 }
+export function discardToken(token, hand) {
+  
+    let index = hand.indexOf(token);
+    console.log ("discardToken found" +hand[index].name);
+    hand.splice(index, 1);
+    if(hand.length>0)
+    for (let i =0; i< hand.length; i++)
+    {
+        console.log("token bag now has " + hand[i]);
+    }
+    
+    else{
+        console.log( "empty hand " + hand);
+
+    }
+    return hand; 
+  }
 
 export function giveFromHand(card) {
   let copy = card;
@@ -50,12 +68,24 @@ export function renderCard(card) {
     const item = document.createElement("div");
     item.id = card.name;
     console.log ("render card name is "+ card.name);
-    //   item.setAttribute('draggable', true);
     item.innerHTML = card.value + " " + card.suit;
-  
     let discardButton = document.createElement("button");
     discardButton.className = "playDiscard";
     discardButton.innerHTML = "discard";
     item.appendChild(discardButton);
     return item;  
+ }
+
+ export function renderToken(token){
+    const item = document.createElement("div");
+    item.id = token.name;
+    //   item.setAttribute('draggable', true);
+    item.innerHTML = token.value + " " + token.suit;
+  
+    let discardButton = document.createElement("button");
+    discardButton.className="tokenDiscard";
+    discardButton.innerHTML = "discard";
+    item.appendChild(discardButton);
+    
+    return item;
  }

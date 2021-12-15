@@ -113,7 +113,7 @@ function setUpButtons() {
         discardTokens[i].onclick = function () {
             game.pieces.drawBag.push(currentPlayer.getTokenHand()[i]);
             shuffleBag();
-            currentPlayer.getTokenHand() = discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
+            discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
             renderTokens(document.getElementById("myTokens"), currentPlayer.getTokenHand());
             
     }
@@ -122,7 +122,7 @@ function setUpButtons() {
     else {
         
     discardTokens[i].onclick = function () {
-       discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
+       gdiscardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
         renderTokens(document.getElementById("myTokens"), currentPlayer.getTokenHand());
       };
       console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");

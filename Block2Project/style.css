@@ -17,11 +17,23 @@ div{
 
 }
 #rules{
-    grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-start: 4;
+    grid-column-end: 6;
     background-color: plum;
     border: solid black;
     height: fit-content;
+}
+#roleRules{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    background-color: plum;
+    border: solid black;
+    height: fit-content;
+}
+.cards{
+    
+    display:inline-flexbox;
+    
 }
 table{
     width: 100%; 

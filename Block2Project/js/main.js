@@ -20,8 +20,9 @@ function setPlayer(player) {
   let currentPlayer = game.players[player];
   renderHand(playerArea, currentPlayer.hand);
   renderPlayedHand(playedArea, currentPlayer.playedHand);
-  renderTokens;
+  renderTokens(tokens,currentPlayer.getTokenHand());
   renderLevel();
+
   console.log(game.players[player].color);
   playerArea.style.backgroundColor = game.players[player].color;
   playedArea.style.backgroundColor = game.players[player].color;
@@ -37,7 +38,7 @@ function setUpGame() {
 function setUpButtons() {
   let currentPlayer = game.getCurrentPlayer();
   let hand = currentPlayer.hand;
-  let tokenHand = currentPlayer.getTokenHand();
+  //let tokenHand = currentPlayer.getTokenHand();
   //switch players
   document.getElementById("player1").onclick = function () {
     setPlayer(0);
@@ -99,20 +100,21 @@ function setUpButtons() {
   }
   //discard from Tokens
   let discardTokens = document.querySelectorAll(".tokenDiscard");
-  
-  for (let i = 0; i < discardTokens.length; i++) {
+  if (currentPlayer.getTokenHand.length !=0){
+  console.log(discardTokens.length + "long");
+  for (let i = 0; i < discardTokens.length; i++) {      
     if (
-      tokenHand[i].suit === "green" ||
-      tokenHand[i].suit === "red" ||
-      tokenHand[i].suit === "Add A Gem" ||
-      tokenHand[i].suit === "Level Up"
+      currentPlayer.getTokenHand()[i].suit === "green" ||
+      currentPlayer.getTokenHand()[i].suit === "red" ||
+      currentPlayer.getTokenHand()[i].suit === "Add A Gem" ||
+      currentPlayer.getTokenHand()[i].suit === "Level Up"
     ) {
        
         discardTokens[i].onclick = function () {
-            game.pieces.drawBag.push(tokenHand[i]);
+            game.pieces.drawBag.push(currentPlayer.getTokenHand()[i]);
             shuffleBag();
-            tokenHand = discardToken(tokenHand[i], tokenHand);
-            renderTokens(document.getElementById("myTokens"), tokenHand);
+            currentPlayer.getTokenHand() = discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
+            renderTokens(document.getElementById("myTokens"), currentPlayer.getTokenHand());
             
     }
     console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");
@@ -120,12 +122,13 @@ function setUpButtons() {
     else {
         
     discardTokens[i].onclick = function () {
-        tokenHand = discardToken(tokenHand[i], tokenHand);
-        renderTokens(document.getElementById("myTokens"), tokenHand);
+        currentPlayer.getTokenHand() = discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
+        renderTokens(document.getElementById("myTokens"), currentPlayer.getTokenHand());
       };
       console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");
   }
 }
+  }
 console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");
   //level up
   let button = document.getElementById("levelUp");
@@ -137,9 +140,9 @@ console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");
     let tokens = game.pieces.drawBag;
     let newToken = draw(tokens);
 
-    tokenHand.push(newToken);
+    currentPlayer.getTokenHand().push(newToken);
     console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");
-    renderTokens(document.getElementById("myTokens"), tokenHand);
+    renderTokens(document.getElementById("myTokens"), currentPlayer.getTokenHand());
   };
   // add a gem
   document.getElementById("add").onclick = function () {

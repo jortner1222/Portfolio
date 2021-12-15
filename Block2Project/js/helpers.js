@@ -45,6 +45,7 @@ export function drawMany(deck, number) {
 export function renderCard(card) {
   const item = document.createElement("div");
   item.id = card.name;
+  item.className="cards";
   //   item.setAttribute('draggable', true);
   item.innerHTML = card.value + " " + card.suit;
 
@@ -61,6 +62,7 @@ export function renderCard(card) {
  export function renderPlayedCard(card){
     const item = document.createElement("div");
     item.id = card.name;
+    item.className= "cards";
     console.log ("render card name is "+ card.name);
     item.innerHTML = card.value + " " + card.suit;
     let discardButton = document.createElement("button");
@@ -73,6 +75,7 @@ export function renderCard(card) {
  export function renderToken(token){
     const item = document.createElement("div");
     item.id = token.name;
+    item.className= "tokens";
     //   item.setAttribute('draggable', true);
     item.innerHTML = token.value + " " + token.suit;
   

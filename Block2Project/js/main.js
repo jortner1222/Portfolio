@@ -100,7 +100,7 @@ function setUpButtons() {
   }
   //discard from Tokens
   let discardTokens = document.querySelectorAll(".tokenDiscard");
-  if (currentPlayer.getTokenHand.length !=0){
+  if (currentPlayer.getTokenHand().length !=0){
   console.log(discardTokens.length + "long");
   for (let i = 0; i < discardTokens.length; i++) {      
     if (
@@ -122,7 +122,7 @@ function setUpButtons() {
     else {
         
     discardTokens[i].onclick = function () {
-        currentPlayer.getTokenHand() = discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
+       discardToken(currentPlayer.getTokenHand()[i], currentPlayer.getTokenHand());
         renderTokens(document.getElementById("myTokens"), currentPlayer.getTokenHand());
       };
       console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");

@@ -11,11 +11,7 @@
 </head>
 <body>
    <h1>The Wizard Always Wins</h1>
-     <form id= "turn">
-        <input type="radio" id= "player1" name= "playerNumber" checked="checked" > Player 1</input>
-        <input type="radio" id= "player2" name= "playerNumber">Player 2</input>
-       
-     </form> 
+     
     <div id="gameBoard">
     <!-- <div id= "turn"> -->
         <div id= "spot1" class= "spot")>1
@@ -129,9 +125,15 @@
     </div>
 
     <div id= "drawButtons">
+        <form id= "turn">
+            <input type="radio" id= "player1" name= "playerNumber" checked="checked" > Player 1</input>
+            <input type="radio" id= "player2" name= "playerNumber">Player 2</input>
+           
+         </form> 
         <button class= "button" id= "token">Draw a Token</button>
         <button class ="button" id= "card">Draw a Card</button>
         <button id= "add">Add My Gem</button>
+       
     </div>
     <div id= "playerArea"  class="playerSpots"> </div>
     <div id= "playedCards" class="playerSpots"></div>

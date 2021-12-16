@@ -36,7 +36,7 @@ function setUpGame() {
 }
 
 function setUpButtons() {
-  let hand = game.getCurrentPlayer().hand;
+
   //let tokenHand = currentPlayer.getTokenHand();
   //switch players
   document.getElementById("player1").onclick = function () {
@@ -49,18 +49,14 @@ function setUpButtons() {
   document.getElementById("card").onclick = function () {
     let deck = game.pieces.deck;
     console.log("drew 1");
-    console.log("current player is " + hand);
+    console.log("current player is " + game.getCurrentPlayer().hand);
     let newCard = draw(deck);
     console.log("new Card is " + newCard.value + newCard.suit);
-    hand.push(newCard);
-    renderHand(document.getElementById("playerArea"), hand);
+    game.getCurrentPlayer().hand.push(newCard);
+    renderHand(document.getElementById("playerArea"), game.getCurrentPlayer().hand);
    
   };
-  //level up
-  let button = document.getElementById("levelUp");
-  button.onclick = function () {
-    renderLevel();
-  };
+ 
     // add a gem
     document.getElementById("add").onclick = function () {
         let newToken = draw(game.pieces.getGems(game.getCurrentPlayer().color));
@@ -175,10 +171,14 @@ function shuffleBag(){
 }
 function renderLevel() {
   let button = document.getElementById("levelUp");
-  let currentPlayer = game.getCurrentPlayer();
   let addLevel = document.getElementById("myLevel");
-  let newLevel = currentPlayer.levelUp();
-  addLevel.innerHTML = "My Level: " + newLevel;
+  addLevel.innerHTML= "My Level: "+game.getCurrentPlayer().getLevel(); 
+  button.onclick= function () {
+    let newLevel = game.getCurrentPlayer().levelUp();
+    addLevel.innerHTML = "My Level: " + newLevel;
+    addLevel.appendChild(button);
+  }
+  
   addLevel.appendChild(button);
 }
 function renderTokens(parent, tokens) {

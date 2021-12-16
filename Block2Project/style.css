@@ -91,13 +91,19 @@ img{
 #drawButtons{
     grid-column-start: 6;
     grid-column-end: 7;
-    margin-top: 60%;
+    
+    background-color: rgb(0, 0, 41);
 }
 button{
    display: block; 
    height: 30px; 
   background-color: plum;
   align-items: center;
+}
+form{
+    background-color: lightblue;
+    margin-bottom: 60px;
+    
 }
 
 .spot{

@@ -63,7 +63,7 @@ function setUpButtons() {
         game.pieces.drawBag.push(newToken);
         shuffleBag(); 
         console.log("Token Bag has " + game.pieces.drawBag.length + " gems.");
-        console.log(game.getCurrentPlayer().color + " gem added");
+        alert(game.getCurrentPlayer().color + " gem added");
       };
 
       //draw a token
